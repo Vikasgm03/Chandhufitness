@@ -128,6 +128,57 @@
             border-color: var(--primary);
         }
 
+        /* --- 4.5 SERVICES SLIDER (New) --- */
+        .scrolling-wrapper {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            padding: 20px 5px; /* Padding for hover effects */
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; /* Smooth swipe on mobile */
+        }
+
+        /* Custom Scrollbar Styling */
+        .scrolling-wrapper::-webkit-scrollbar { height: 6px; }
+        .scrolling-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
+        .scrolling-wrapper::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+        .service-card {
+            min-width: 280px; /* Fixed width for slider */
+            flex: 0 0 auto;   /* Don't shrink */
+            scroll-snap-align: center;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+            padding: 0; /* Remove default padding for full image */
+        }
+
+        .service-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .service-content {
+            padding: 20px;
+            background: linear-gradient(to top, #000 0%, transparent 100%);
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .service-card:hover .service-img {
+            transform: scale(1.1);
+        }
+        
+        .service-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
         /* --- 5. SCHEDULE SECTION --- */
         .level-controls { display: flex; justify-content: center; gap: 20px; margin-bottom: 50px; flex-wrap: wrap; }
         
@@ -250,6 +301,63 @@
         </ul>
     </nav>
 </header>
+
+    <section id="services" style="padding-bottom: 50px;">
+    <h2 class="section-title">OUR <span>EXPERTISE</span></h2>
+    
+    <div class="scrolling-wrapper">
+        
+        <div class="glass-card service-card" data-aos="fade-left" data-aos-delay="0">
+            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500" class="service-img" alt="Weights">
+            <div class="service-content">
+                <i class="fas fa-dumbbell service-icon"></i>
+                <h3>WEIGHTLIFTING</h3>
+                <p style="color:#ccc; font-size:0.9rem;">Heavy compound movements to build raw power.</p>
+            </div>
+        </div>
+
+        <div class="glass-card service-card" data-aos="fade-left" data-aos-delay="100">
+            <img src="https://images.unsplash.com/photo-1538805060518-e356e22c9491?w=500" class="service-img" alt="Cardio">
+            <div class="service-content">
+                <i class="fas fa-running service-icon"></i>
+                <h3>HIIT & CARDIO</h3>
+                <p style="color:#ccc; font-size:0.9rem;">Endurance training to shred fat and boost stamina.</p>
+            </div>
+        </div>
+
+        <div class="glass-card service-card" data-aos="fade-left" data-aos-delay="200">
+            <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=500" class="service-img" alt="Crossfit">
+            <div class="service-content">
+                <i class="fas fa-burn service-icon"></i>
+                <h3>CROSSFIT</h3>
+                <p style="color:#ccc; font-size:0.9rem;">High-intensity functional movements for athletes.</p>
+            </div>
+        </div>
+
+        <div class="glass-card service-card" data-aos="fade-left" data-aos-delay="300">
+            <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=500" class="service-img" alt="Yoga">
+            <div class="service-content">
+                <i class="fas fa-spa service-icon"></i>
+                <h3>YOGA & REHAB</h3>
+                <p style="color:#ccc; font-size:0.9rem;">Improve flexibility and recover from injuries.</p>
+            </div>
+        </div>
+
+        <div class="glass-card service-card" data-aos="fade-left" data-aos-delay="400">
+            <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500" class="service-img" alt="Personal Trainer">
+            <div class="service-content">
+                <i class="fas fa-user-friends service-icon"></i>
+                <h3>PERSONAL TRAINING</h3>
+                <p style="color:#ccc; font-size:0.9rem;">1-on-1 coaching tailored to your specific goals.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <p style="text-align:center; color:#666; margin-top:10px; font-size:0.8rem;">
+        <i class="fas fa-arrows-alt-h"></i> Swipe to explore services
+    </p>
+</section>
 
 <div class="hero" id="home">
     <h1 data-aos="fade-down">BUILD YOUR <br><span class="typewriter"></span></h1>
