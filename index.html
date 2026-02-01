@@ -304,7 +304,7 @@
         .features li i { color: var(--primary); margin-right: 10px; }
 
        /* --- 8. ENGAGING FOOTER --- */
-        /* --- 9. FAQ REDESIGN (Interactive) --- */
+        /* --- 9. FAQ REDESIGN --- */
         .faq-container {
             max-width: 800px;
             margin: 0 auto;
@@ -313,27 +313,27 @@
         details {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 15px;
-            border-radius: 10px;
+            margin-bottom: 20px;
+            border-radius: 12px;
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
         details:hover {
-            border-color: var(--primary);
-            transform: translateX(10px); /* Slides right on hover */
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(5px); /* Subtle slide effect */
         }
 
         /* Active State */
         details[open] {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.6);
             border-color: var(--primary);
-            box-shadow: 0 5px 20px rgba(255, 59, 59, 0.15);
+            box-shadow: 0 5px 15px rgba(255, 59, 59, 0.1);
         }
 
         summary {
-            padding: 20px;
+            padding: 25px;
             cursor: pointer;
             font-family: 'Oswald', sans-serif;
             font-size: 1.1rem;
@@ -342,57 +342,47 @@
             justify-content: space-between;
             align-items: center;
             list-style: none;
+            user-select: none;
             color: white;
-            transition: 0.3s;
         }
 
-        /* Remove default arrow */
+        /* Hide default marker */
         summary::-webkit-details-marker { display: none; }
 
-        /* Custom Animated Icon */
+        /* Custom Icon (+ turns to X) */
         summary::after {
             content: '+';
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--primary);
             font-weight: 300;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.4s;
+            line-height: 0;
         }
 
-        /* Rotate icon when open */
         details[open] summary::after {
-            content: '+'; /* Keeps plus but rotates it */
-            transform: rotate(45deg); /* Turns into X */
+            transform: rotate(45deg);
             color: white;
         }
 
-        /* The Answer Text Animation */
+        /* The Answer Text */
         .faq-answer {
-            padding: 0 20px 25px;
+            padding: 0 25px 25px;
             color: #b3b3b3;
-            line-height: 1.6;
+            line-height: 1.7;
             font-size: 0.95rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: -5px;
+            padding-top: 20px;
             animation: slideDown 0.4s ease;
+        }
+
+        details[open] .faq-answer {
+            color: #ddd; /* Brighter text when open */
         }
 
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        footer {
-            background: #050505;
-            padding: 80px 5% 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Top Red Gradient Line */
-        footer::before {
-            content: '';
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
         }
 
         .footer-content {
