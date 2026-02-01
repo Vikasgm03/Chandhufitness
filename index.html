@@ -420,102 +420,94 @@
             .social-icons { justify-content: center; }
             .contact-row { justify-content: center; }
         }
-
-        /* --- 9. FAQ REDESIGN (Aligned & Tight) --- */
+/* --- 9. FAQ REDESIGN (Industrial Tech Style) --- */
         .faq-container {
             max-width: 800px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Space between cards */
         }
 
         details {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 15px;
-            border-radius: 12px;
+            background: #111; /* Solid dark grey */
+            border: 1px solid #222; /* Subtle border */
+            border-radius: 8px;
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
         /* Hover Effect */
         details:hover {
-            border-color: rgba(255, 59, 59, 0.4);
-            background: rgba(255, 255, 255, 0.04);
+            background: #161616;
+            border-color: #444;
+            transform: translateY(-2px);
         }
 
         /* Active/Open State */
         details[open] {
-            background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), #050505);
-            border-color: var(--primary);
-            box-shadow: 0 0 25px rgba(255, 59, 59, 0.1); 
+            background: #000; /* Turns pitch black when open */
+            border-color: var(--primary); /* Red Border activates */
+            box-shadow: 0 10px 30px rgba(255, 59, 59, 0.15); /* Red Glow */
         }
 
         summary {
-            /* FIXED PADDING: Balanced top/bottom */
-            padding: 20px 20px; 
+            padding: 22px 30px; /* Comfortable padding */
             cursor: pointer;
             font-family: 'Oswald', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             letter-spacing: 1px;
+            color: #fff;
             
-            /* ALIGNMENT FIX */
+            /* FLEXBOX ALIGNMENT (Keeps text centered) */
             display: flex;
             justify-content: space-between;
-            align-items: center; /* Ensures text stays exactly in the middle vertically */
+            align-items: center; 
             
             list-style: none;
-            color: #ddd;
             transition: 0.3s;
         }
 
         summary::-webkit-details-marker { display: none; }
 
-        /* The Circle Icon */
+        /* Custom Arrow Icon */
         summary::after {
-            content: '+';
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px; /* Slightly smaller for better proportion */
-            height: 30px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.05);
-            font-size: 1.2rem;
-            color: var(--primary);
-            transition: 0.3s ease;
-            flex-shrink: 0; /* Prevents icon from squishing on mobile */
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid #666;
+            border-bottom: 2px solid #666;
+            transform: rotate(45deg); /* Arrow points down */
+            transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            margin-left: 20px;
         }
 
-        /* Active Icon Animation */
-        details[open] summary::after {
-            transform: rotate(135deg); 
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 0 10px var(--primary);
-        }
-
+        /* Active State Changes */
         details[open] summary {
-            color: white;
-            padding-bottom: 15px; /* Adjust space when open */
+            color: var(--primary); /* Title turns Red */
+            border-bottom: 1px solid rgba(255, 59, 59, 0.1); /* Divider line */
         }
 
-        /* Answer Text Alignment Fix */
-.faq-answer {
-            /* UPDATED PADDING: 10px Top, 25px Sides/Bottom */
-            padding: 10px 25px 25px 25px; 
-            color: #aaa;
-            line-height: 1.6;
+        details[open] summary::after {
+            transform: rotate(225deg); /* Arrow points up */
+            border-color: var(--primary); /* Arrow turns Red */
+        }
+
+        /* Answer Text */
+        .faq-answer {
+            padding: 25px 30px; /* Spacious padding */
+            color: #ccc;
+            line-height: 1.7;
             font-size: 0.95rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            margin-top: 0;
-            
-            /* Smooth Fade In */
             opacity: 0;
-            animation: fadeInAnswer 0.4s forwards;
+            animation: fadeIn 0.5s forwards;
         }
 
-        @keyframes fadeInAnswer {
-            to { opacity: 1; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+       
         /* --- 9. MODALS --- */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(5px); overflow-y: auto; }
         .modal-content { background: #111; margin: 5% auto; padding: 40px; width: 90%; max-width: 500px; border-radius: 15px; border: 1px solid #333; text-align: center; position: relative; box-shadow: 0 0 50px rgba(255, 59, 59, 0.1); }
