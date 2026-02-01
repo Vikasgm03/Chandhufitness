@@ -438,111 +438,113 @@
   </div>
 </div>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({ duration: 1000, once: true });
+AOS.init({ duration: 1000, once: true });
 
-    // Typewriter
-    const words = ["MUSCLE", "CONFIDENCE", "DISCIPLINE"];
-    let i = 0, j = 0, isDeleting = false; 
-    function type() {
-        let current = words[i];
-        let text = isDeleting ? current.substring(0, j-1) : current.substring(0, j+1);
-        document.querySelector(".typewriter").innerText = text;
-        j = isDeleting ? j-1 : j+1;
-        if(!isDeleting && j === current.length) isDeleting = true;
-        else if(isDeleting && j === 0) { isDeleting = false; i = (i+1)%words.length; }
-        setTimeout(type, isDeleting ? 100 : 200);
-    }
-    type();
+/* ================= TYPEWRITER ================= */
+const words = ["MUSCLE", "CONFIDENCE", "DISCIPLINE"];
+let i = 0, j = 0, isDeleting = false;
 
-    // Toggle Mobile Menu
-    function toggleMenu() {
-        document.getElementById('nav-list').classList.toggle('active');
-    }
+function type() {
+  const current = words[i];
+  document.querySelector(".typewriter").innerText =
+    isDeleting ? current.substring(0, --j) : current.substring(0, ++j);
 
-    // Interactive Schedule
-    function openDay(evt, dayName) {
-        let content = document.getElementsByClassName("workout-content");
-        for (let k = 0; k < content.length; k++) {
-            content[k].style.display = "none";
-            content[k].classList.remove("active");
-        }
-        let tabs = document.getElementsByClassName("day-btn");
-        for (let k = 0; k < tabs.length; k++) tabs[k].classList.remove("active");
-        
-        let target = document.getElementById(dayName);
-        target.style.display = "block";
-        setTimeout(() => target.classList.add("active"), 10);
-        evt.currentTarget.classList.add("active");
-    }
-
-    // Tools
-    function calcBMI() {
-        let w = document.getElementById('bmi-weight').value;
-        let h = document.getElementById('bmi-height').value;
-        if(w && h) {
-            let bmi = (w / ((h/100)**2)).toFixed(1);
-            let color = bmi < 25 && bmi > 18.5 ? "#00ff00" : "#ff3b3b";
-            document.getElementById('bmi-result').innerHTML = `BMI: <span style="color:${color}">${bmi}</span>`;
-        }
-    }
-
-    function calcCalories() {
-        let age = parseFloat(document.getElementById('cal-age').value);
-        let gender = document.getElementById('cal-gender').value;
-        let weight = parseFloat(document.getElementById('cal-weight').value);
-        let height = parseFloat(document.getElementById('cal-height').value);
-        let activity = parseFloat(document.getElementById('cal-activity').value);
-
-        if (!age || !weight || !height) {
-            document.getElementById('cal-result').innerHTML = "<span style='color:red'>Please fill all fields</span>";
-            return;
-        }
-
-        let bmr = (gender === 'male') 
-            ? 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)
-            : 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
-
-        let tdee = Math.round(bmr * activity);
-        document.getElementById('cal-result').innerHTML = `
-            <span style="color:white">Maintain:</span> ${tdee} kcal<br>
-            <span style="color:var(--primary)">Bulk:</span> ${tdee + 300} kcal
-        `;
-    }
-
-    // Modal
-    function openModal(plan, price) {
-        document.getElementById('paymentModal').style.display = 'block';
-        document.getElementById('modalPlan').innerText = plan;
-        document.getElementById('modalPrice').innerText = price;
-        document.body.style.overflow = 'hidden';
-    }
-    function closeModal() {
-        document.getElementById('paymentModal').style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-
-    <script>
-function openAdmission(){
-  document.getElementById("admissionModal").style.display="block";
+  if (!isDeleting && j === current.length) isDeleting = true;
+  else if (isDeleting && j === 0) {
+    isDeleting = false;
+    i = (i + 1) % words.length;
+  }
+  setTimeout(type, isDeleting ? 100 : 200);
 }
-function closeAdmission(){
-  document.getElementById("admissionModal").style.display="none";
+type();
+
+/* ================= MOBILE MENU ================= */
+function toggleMenu() {
+  document.getElementById("nav-list").classList.toggle("active");
 }
 
-function submitAdmission(){
+/* ================= SCHEDULE ================= */
+function openDay(evt, dayName) {
+  document.querySelectorAll(".workout-content").forEach(el => el.classList.remove("active"));
+  document.querySelectorAll(".day-btn").forEach(btn => btn.classList.remove("active"));
+
+  document.getElementById(dayName).classList.add("active");
+  evt.currentTarget.classList.add("active");
+}
+
+/* ================= BMI ================= */
+function calcBMI() {
+  const w = bmi-weight.value;
+  const h = bmi-height.value;
+  if (!w || !h) return;
+
+  const bmi = (w / ((h / 100) ** 2)).toFixed(1);
+  const status =
+    bmi < 18.5 ? "Underweight" :
+    bmi < 25 ? "Normal" :
+    bmi < 30 ? "Overweight" : "Obese";
+
+  bmi-result.innerHTML = `BMI: ${bmi} (${status})`;
+}
+
+/* ================= TDEE ================= */
+function calcCalories() {
+  const age = +cal-age.value;
+  const weight = +cal-weight.value;
+  const height = +cal-height.value;
+  const gender = cal-gender.value;
+  const activity = +cal-activity.value;
+
+  if (!age || !weight || !height) {
+    cal-result.innerHTML = "<span style='color:red'>Fill all fields</span>";
+    return;
+  }
+
+  const bmr =
+    gender === "male"
+      ? 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)
+      : 447.593 + (9.247 * weight) + (3.098 * height) - (4.33 * age);
+
+  const tdee = Math.round(bmr * activity);
+  cal-result.innerHTML = `Maintain: ${tdee} kcal<br>Bulk: ${tdee + 300} kcal`;
+}
+
+/* ================= PAYMENT MODAL ================= */
+function openModal(plan, price) {
+  paymentModal.style.display = "block";
+  modalPlan.innerText = plan;
+  modalPrice.innerText = price;
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  paymentModal.style.display = "none";
+  document.body.style.overflow = "auto";
+}
+
+/* ================= ADMISSION MODAL ================= */
+function openAdmission() {
+  admissionModal.style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+
+function closeAdmission() {
+  admissionModal.style.display = "none";
+  document.body.style.overflow = "auto";
+}
+
+function submitAdmission() {
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const plan = document.getElementById("plan").value;
 
-  if(!name || !phone || !plan){
+  if (!name || !phone || !plan) {
     alert("Please fill required fields");
     return;
   }
 
-  // WhatsApp lead message
-  const msg = 
+  const msg =
 `New Gym Admission Enquiry
 Name: ${name}
 Phone: ${phone}
@@ -556,13 +558,10 @@ Plan: ${plan}`;
   closeAdmission();
 }
 
-    window.onclick = function(e){
-  if(e.target === admissionModal) closeAdmission();
-}
-
-    
+/* ================= CLICK OUTSIDE ================= */
+window.addEventListener("click", function (e) {
+  if (e.target === paymentModal) closeModal();
+  if (e.target === admissionModal) closeAdmission();
+});
 </script>
 
-</script>
-</body>
-</html>
