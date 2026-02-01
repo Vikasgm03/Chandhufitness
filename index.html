@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IronLifters Gym</title>
+    <style>
+        /* --- 1. GLOBAL STYLES (Dark Theme) --- */
+        :root {
+            --primary: #ff3b3b; /* Gym Red */
+            --dark: #111;
+            --gray: #222;
+            --text: #fff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--dark); color: var(--text); line-height: 1.6; }
+        a { text-decoration: none; color: white; }
+
+        /* --- 2. HEADER & HERO --- */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; background-color: rgba(0,0,0,0.9);
+            position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 2px solid var(--primary);
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); text-transform: uppercase; }
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav a:hover { color: var(--primary); }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 20px;
+        }
+        .hero h1 { font-size: 3.5rem; text-transform: uppercase; margin-bottom: 20px; }
+        .hero span { color: var(--primary); }
+        .btn {
+            background-color: var(--primary); color: white; padding: 12px 30px;
+            font-weight: bold; border-radius: 5px; cursor: pointer; border: none; font-size: 1rem;
+            transition: 0.3s;
+        }
+        .btn:hover { background-color: #d63030; transform: scale(1.05); }
+
+        /* --- 3. GALLERY (Grid) --- */
+        section { padding: 60px 5%; }
+        h2 { text-align: center; margin-bottom: 40px; font-size: 2.5rem; text-transform: uppercase; }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .gallery-item { height: 250px; overflow: hidden; border-radius: 8px; cursor: pointer; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* --- 4. PRICING PLANS --- */
+        .pricing-container {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
+        }
+        .plan-card {
+            background-color: var(--gray); padding: 30px; border-radius: 10px;
+            width: 300px; text-align: center; border: 1px solid #333; position: relative;
+        }
+        .plan-card:hover { border-color: var(--primary); box-shadow: 0 0 15px rgba(255, 59, 59, 0.3); }
+        .price { font-size: 2.5rem; font-weight: bold; margin: 15px 0; color: var(--primary); }
+        .features { list-style: none; margin-bottom: 25px; text-align: left; padding-left: 20px; }
+        .features li { margin-bottom: 10px; }
+        .features li::before { content: "✓"; color: var(--primary); margin-right: 10px; }
+
+        /* --- 5. MODAL (Pop-up) --- */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.85);
+            overflow-y: auto; /* Allows scrolling if screen is small */
+        }
+        .modal-content {
+            background-color: #1a1a1a; margin: 5% auto; padding: 25px;
+            width: 90%; max-width: 500px; border-radius: 10px; position: relative;
+            text-align: center; border: 2px solid var(--primary);
+        }
+        .close {
+            position: absolute; top: 10px; right: 20px; color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer;
+        }
+        .close:hover { color: white; }
+        
+        /* Modal Steps */
+        .step-title { color: var(--primary); margin: 20px 0 10px; text-transform: uppercase; }
+        .qr-placeholder {
+            width: 200px; height: 200px; background: white; margin: 10px auto;
+            display: flex; align-items: center; justify-content: center; color: black; font-weight: bold;
+        }
+        iframe { width: 100%; height: 500px; border: none; margin-top: 10px; background: white; }
+
+        /* --- 6. FOOTER --- */
+        footer { background-color: black; padding: 40px; text-align: center; margin-top: 50px; }
+        .footer-content p { color: #888; }
+        
+        /* Mobile Fixes */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            nav { display: none; } /* Simplified for demo */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Iron<span style="color:white">Lifters</span></div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#plans">Plans</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero" id="home">
+        <h1>Build Your <br><span>Dream Body</span></h1>
+        <p>Professional Equipment. Expert Trainers. No Excuses.</p>
+        <br>
+        <a href="#plans" class="btn">Start Membership</a>
+    </div>
+
+    <section id="gallery">
+        <h2>Our Facility</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500" alt="Gym 1"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=500" alt="Gym 2"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500" alt="Gym 3"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1574680096141-9832005263d8?w=500" alt="Gym 4"></div>
+        </div>
+    </section>
+
+    <section id="plans">
+        <h2>Membership Plans</h2>
+        <div class="pricing-container">
+            
+            <div class="plan-card">
+                <h3>Silver</h3>
+                <div class="price">₹1000<small>/mo</small></div>
+                <ul class="features">
+                    <li>Gym Access (6 AM - 10 AM)</li>
+                    <li>Cardio Section</li>
+                    <li>General Locker</li>
+                </ul>
+                <button class="btn" onclick="openModal('Silver Plan', '1000')">Join Now</button>
+            </div>
+
+            <div class="plan-card" style="border-color: var(--primary);">
+                <div style="position: absolute; top:0; right:0; background:var(--primary); padding: 5px 10px; font-size: 0.8rem;">MOST POPULAR</div>
+                <h3>Gold</h3>
+                <div class="price">₹2000<small>/mo</small></div>
+                <ul class="features">
+                    <li>Full Day Access</li>
+                    <li>Cardio + Weights</li>
+                    <li>Steam Bath (Weekly)</li>
+                    <li>Personal Locker</li>
+                </ul>
+                <button class="btn" onclick="openModal('Gold Plan', '2000')">Join Now</button>
+            </div>
+
+            <div class="plan-card">
+                <h3>Platinum</h3>
+                <div class="price">₹5000<small>/3 mo</small></div>
+                <ul class="features">
+                    <li>All Gold Benefits</li>
+                    <li>Personal Trainer (3 Sessions)</li>
+                    <li>Diet Consultation</li>
+                    <li>Free T-Shirt</li>
+                </ul>
+                <button class="btn" onclick="openModal('Platinum Plan', '5000')">Join Now</button>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            
+            <h3 class="step-title">Step 1: Scan & Pay</h3>
+            <p>Please pay <strong>₹<span id="modalPrice">0</span></strong> for <span id="modalPlan">Plan</span></p>
+            
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" 
+                 alt="Scan QR" style="width:150px; margin: 15px auto; border: 5px solid white;">
+            
+            <p><small>Accepted: GPay, PhonePe, Paytm</small></p>
+            <hr style="border-color: #333; margin: 20px 0;">
+
+            <h3 class="step-title">Step 2: Enter Details</h3>
+            <p style="margin-bottom: 15px;">Fill this form so we can create your membership card.</p>
+            
+            <iframe 
+                src="https://docs.google.com/forms/d/e/1FAIpQLSdc.../viewform?embedded=true" 
+                width="100%" height="400" frameborder="0" marginheight="0" marginwidth="0">
+                Loading Form...
+            </iframe>
+            </div>
+    </div>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <h3>IronLifters Gym</h3>
+            <p>123 Fitness Street, Main Market, City Name</p>
+            <p>Call/WhatsApp: +91 98765 43210</p>
+            <br>
+            <p>&copy; 2024 IronLifters Gym. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to open the modal with dynamic data
+        function openModal(planName, planPrice) {
+            document.getElementById('modalPlan').innerText = planName;
+            document.getElementById('modalPrice').innerText = planPrice;
+            document.getElementById('paymentModal').style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = "none";
+        }
+
+        // Close modal if user clicks outside the box
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('paymentModal')) {
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+</html>
