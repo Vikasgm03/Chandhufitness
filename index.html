@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IronLifters Gym</title>
+    <title>IronLifters Gym | Build Your Legacy</title>
     <style>
         /* --- 1. GLOBAL STYLES (Dark Theme) --- */
         :root {
@@ -11,128 +11,211 @@
             --dark: #111;
             --gray: #222;
             --text: #fff;
+            --light-text: #ccc;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--dark); color: var(--text); line-height: 1.6; }
-        a { text-decoration: none; color: white; }
+        body { background-color: var(--dark); color: var(--text); line-height: 1.6; scroll-behavior: smooth; }
+        a { text-decoration: none; color: white; transition: 0.3s; }
+        img { display: block; max-width: 100%; }
 
-        /* --- 2. HEADER & HERO --- */
+        /* --- 2. HEADER & NAV --- */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 5%; background-color: rgba(0,0,0,0.9);
-            position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 2px solid var(--primary);
+            padding: 15px 5%; background-color: rgba(0,0,0,0.95);
+            position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--primary);
         }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); text-transform: uppercase; }
-        nav ul { display: flex; list-style: none; gap: 20px; }
+        .logo { font-size: 1.8rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+        .logo span { color: white; }
+        nav ul { display: flex; list-style: none; gap: 25px; }
         nav a:hover { color: var(--primary); }
+        .nav-btn { background: var(--primary); padding: 8px 20px; border-radius: 4px; font-weight: bold; }
+        .nav-btn:hover { background: white; color: black; }
 
+        /* --- 3. HERO SECTION --- */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop');
-            background-size: cover; background-position: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop');
+            background-size: cover; background-position: center; background-attachment: fixed;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 20px;
         }
-        .hero h1 { font-size: 3.5rem; text-transform: uppercase; margin-bottom: 20px; }
+        .hero h1 { font-size: 4rem; text-transform: uppercase; margin-bottom: 10px; line-height: 1.1; }
         .hero span { color: var(--primary); }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; color: var(--light-text); }
         .btn {
-            background-color: var(--primary); color: white; padding: 12px 30px;
-            font-weight: bold; border-radius: 5px; cursor: pointer; border: none; font-size: 1rem;
-            transition: 0.3s;
+            background-color: var(--primary); color: white; padding: 15px 40px;
+            font-weight: bold; border-radius: 50px; cursor: pointer; border: none; font-size: 1.1rem;
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
         }
-        .btn:hover { background-color: #d63030; transform: scale(1.05); }
+        .btn:hover { background-color: white; color: black; transform: translateY(-3px); }
 
-        /* --- 3. GALLERY (Grid) --- */
-        section { padding: 60px 5%; }
-        h2 { text-align: center; margin-bottom: 40px; font-size: 2.5rem; text-transform: uppercase; }
-        
+        /* --- 4. BMI CALCULATOR --- */
+        #bmi-calculator { background-color: #1a1a1a; text-align: center; padding: 60px 5%; border-bottom: 1px solid #333; }
+        .bmi-inputs { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .bmi-inputs input { padding: 15px; width: 200px; background: #333; border: 1px solid #444; color: white; border-radius: 5px; }
+        #bmi-result { margin-top: 20px; font-size: 1.5rem; font-weight: bold; color: var(--primary); min-height: 30px; }
+
+        /* --- 5. COMMON SECTION STYLES --- */
+        section { padding: 80px 5%; }
+        h2 { text-align: center; margin-bottom: 50px; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        h2::after { content: ''; display: block; width: 60px; height: 3px; background: var(--primary); margin: 15px auto 0; }
+
+        /* --- 6. GALLERY --- */
         .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;
         }
-        .gallery-item { height: 250px; overflow: hidden; border-radius: 8px; cursor: pointer; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-        .gallery-item:hover img { transform: scale(1.1); }
+        .gallery-item { height: 250px; overflow: hidden; border-radius: 8px; position: relative; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; filter: grayscale(30%); }
+        .gallery-item:hover img { transform: scale(1.1); filter: grayscale(0%); }
 
-        /* --- 4. PRICING PLANS --- */
-        .pricing-container {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
+        /* --- 7. TRAINERS --- */
+        .trainers-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
+        .trainer-card { text-align: center; width: 250px; }
+        .trainer-img { 
+            width: 200px; height: 200px; border-radius: 50%; object-fit: cover; 
+            border: 4px solid var(--primary); margin-bottom: 20px; transition: 0.3s;
         }
+        .trainer-card:hover .trainer-img { transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 59, 59, 0.4); }
+        .trainer-name { font-size: 1.5rem; margin-bottom: 5px; }
+        .trainer-role { color: var(--primary); font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
+
+        /* --- 8. SUCCESS STORIES --- */
+        #transformations { background-color: var(--gray); }
+        .story-card { background: #111; padding: 20px; border-radius: 10px; text-align: center; }
+        .ba-images { display: flex; gap: 10px; margin-bottom: 15px; }
+        .ba-images img { width: 50%; border-radius: 5px; aspect-ratio: 3/4; object-fit: cover; }
+        .quote { font-style: italic; color: #ccc; margin-bottom: 10px; }
+
+        /* --- 9. PRICING --- */
+        .pricing-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
         .plan-card {
-            background-color: var(--gray); padding: 30px; border-radius: 10px;
-            width: 300px; text-align: center; border: 1px solid #333; position: relative;
+            background-color: var(--gray); padding: 40px 30px; border-radius: 15px;
+            width: 320px; text-align: center; border: 1px solid #333; position: relative; transition: 0.3s;
         }
-        .plan-card:hover { border-color: var(--primary); box-shadow: 0 0 15px rgba(255, 59, 59, 0.3); }
-        .price { font-size: 2.5rem; font-weight: bold; margin: 15px 0; color: var(--primary); }
-        .features { list-style: none; margin-bottom: 25px; text-align: left; padding-left: 20px; }
-        .features li { margin-bottom: 10px; }
-        .features li::before { content: "✓"; color: var(--primary); margin-right: 10px; }
+        .plan-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .plan-card.popular { border: 2px solid var(--primary); transform: scale(1.05); z-index: 10; background: #1a1a1a; }
+        .tag { position: absolute; top: 0; right: 0; background: var(--primary); padding: 5px 15px; font-size: 0.8rem; font-weight: bold; border-bottom-left-radius: 10px; }
+        .price { font-size: 3rem; font-weight: 800; margin: 20px 0; color: white; }
+        .price small { font-size: 1rem; color: #888; font-weight: normal; }
+        .features { list-style: none; margin-bottom: 30px; text-align: left; padding-left: 10px; color: #ccc; }
+        .features li { margin-bottom: 12px; display: flex; align-items: center; }
+        .features li::before { content: "✓"; color: var(--primary); margin-right: 10px; font-weight: bold; }
 
-        /* --- 5. MODAL (Pop-up) --- */
-        .modal {
-            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
-            width: 100%; height: 100%; background-color: rgba(0,0,0,0.85);
-            overflow-y: auto; /* Allows scrolling if screen is small */
-        }
-        .modal-content {
-            background-color: #1a1a1a; margin: 5% auto; padding: 25px;
-            width: 90%; max-width: 500px; border-radius: 10px; position: relative;
-            text-align: center; border: 2px solid var(--primary);
-        }
-        .close {
-            position: absolute; top: 10px; right: 20px; color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer;
-        }
+        /* --- 10. FAQ --- */
+        .faq-container { max-width: 700px; margin: auto; }
+        details { background: #222; margin-bottom: 15px; border-radius: 5px; overflow: hidden; transition: 0.3s; }
+        details[open] { background: #2a2a2a; border-left: 4px solid var(--primary); }
+        summary { padding: 20px; cursor: pointer; font-weight: bold; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::after { content: '+'; font-size: 1.5rem; color: var(--primary); }
+        details[open] summary::after { content: '-'; }
+        .faq-answer { padding: 0 20px 20px; color: #bbb; line-height: 1.6; }
+
+        /* --- 11. MAP & FOOTER --- */
+        .map-section { padding: 0; height: 400px; filter: grayscale(100%) invert(90%); transition: 0.5s; }
+        .map-section:hover { filter: none; }
+        footer { background-color: #000; padding: 60px 5% 20px; text-align: center; border-top: 1px solid #222; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; text-align: left; }
+        .footer-col h3 { color: white; margin-bottom: 20px; font-size: 1.2rem; }
+        .footer-col p, .footer-col li { color: #888; margin-bottom: 10px; list-style: none; }
+        .social-icons a { color: white; margin-right: 15px; font-size: 1.2rem; }
+        .copyright { border-top: 1px solid #222; padding-top: 20px; color: #555; font-size: 0.9rem; }
+
+        /* --- 12. MODAL --- */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); overflow-y: auto; backdrop-filter: blur(5px); }
+        .modal-content { background-color: #151515; margin: 5% auto; padding: 30px; width: 95%; max-width: 500px; border-radius: 12px; position: relative; text-align: center; border: 1px solid #333; box-shadow: 0 0 50px rgba(255,59,59,0.2); }
+        .close { position: absolute; top: 15px; right: 20px; color: #666; font-size: 30px; cursor: pointer; transition: 0.3s; }
         .close:hover { color: white; }
         
-        /* Modal Steps */
-        .step-title { color: var(--primary); margin: 20px 0 10px; text-transform: uppercase; }
-        .qr-placeholder {
-            width: 200px; height: 200px; background: white; margin: 10px auto;
-            display: flex; align-items: center; justify-content: center; color: black; font-weight: bold;
-        }
-        iframe { width: 100%; height: 500px; border: none; margin-top: 10px; background: white; }
-
-        /* --- 6. FOOTER --- */
-        footer { background-color: black; padding: 40px; text-align: center; margin-top: 50px; }
-        .footer-content p { color: #888; }
-        
-        /* Mobile Fixes */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
-            nav { display: none; } /* Simplified for demo */
+            nav { display: none; } /* Hide standard nav on mobile for this demo */
+            .logo { font-size: 1.4rem; }
+            .plan-card.popular { transform: none; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">Iron<span style="color:white">Lifters</span></div>
+        <div class="logo">Iron<span>Lifters</span></div>
         <nav>
             <ul>
                 <li><a href="#home">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#trainers">Trainers</a></li>
                 <li><a href="#plans">Plans</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#contact" class="nav-btn">Join Now</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="hero" id="home">
-        <h1>Build Your <br><span>Dream Body</span></h1>
-        <p>Professional Equipment. Expert Trainers. No Excuses.</p>
-        <br>
-        <a href="#plans" class="btn">Start Membership</a>
+        <h1>Forged In <br><span>The Iron</span></h1>
+        <p>Your journey to strength starts here. No contracts, just results.</p>
+        <a href="#plans" class="btn">View Memberships</a>
     </div>
+
+    <section id="bmi-calculator">
+        <h2>Calculate Your BMI</h2>
+        <p style="color: #aaa; margin-bottom: 20px;">Check your body mass index to set better fitness goals.</p>
+        <div class="bmi-inputs">
+            <input type="number" id="weight" placeholder="Weight (kg)">
+            <input type="number" id="height" placeholder="Height (cm)">
+            <button onclick="calculateBMI()" class="btn" style="padding: 15px 30px; border-radius: 5px;">Calculate</button>
+        </div>
+        <div id="bmi-result"></div>
+    </section>
 
     <section id="gallery">
         <h2>Our Facility</h2>
         <div class="gallery-grid">
-            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500" alt="Gym 1"></div>
-            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=500" alt="Gym 2"></div>
-            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500" alt="Gym 3"></div>
-            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1574680096141-9832005263d8?w=500" alt="Gym 4"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600" alt="Gym Floor"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600" alt="Weights"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1574680096141-9832005263d8?w=600" alt="Cardio"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1627483262769-04d0a1401487?w=600" alt="Dumbbells"></div>
+        </div>
+    </section>
+
+    <section id="trainers">
+        <h2>Meet The Team</h2>
+        <div class="trainers-grid">
+            <div class="trainer-card">
+                <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=300" alt="Trainer" class="trainer-img">
+                <div class="trainer-name">Rahul Sharma</div>
+                <div class="trainer-role">Head Coach</div>
+            </div>
+            <div class="trainer-card">
+                <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=300" alt="Trainer" class="trainer-img">
+                <div class="trainer-name">Priya Singh</div>
+                <div class="trainer-role">Yoga Specialist</div>
+            </div>
+            <div class="trainer-card">
+                <img src="https://images.unsplash.com/photo-1597347343908-2937e7dcc560?w=300" alt="Trainer" class="trainer-img">
+                <div class="trainer-name">Vikram Das</div>
+                <div class="trainer-role">Crossfit Expert</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="transformations">
+        <h2>Real Results</h2>
+        <div class="gallery-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            <div class="story-card">
+                <div class="ba-images">
+                    <img src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=300" alt="Before">
+                    <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=300" alt="After">
+                </div>
+                <p class="quote">"Lost 15kg in 6 months! Best gym environment."</p>
+                <h4 style="color: var(--primary);">- Amit Kumar</h4>
+            </div>
+            <div class="story-card">
+                <div class="ba-images">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300" alt="Before">
+                    <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=300" alt="After">
+                </div>
+                <p class="quote">"Gained 8kg of muscle. Trainers are super helpful."</p>
+                <h4 style="color: var(--primary);">- Sarah J.</h4>
+            </div>
         </div>
     </section>
 
@@ -144,24 +227,25 @@
                 <h3>Silver</h3>
                 <div class="price">₹1000<small>/mo</small></div>
                 <ul class="features">
-                    <li>Gym Access (6 AM - 10 AM)</li>
+                    <li>Gym Access (Morning only)</li>
                     <li>Cardio Section</li>
                     <li>General Locker</li>
+                    <li>No Steam Bath</li>
                 </ul>
-                <button class="btn" onclick="openModal('Silver Plan', '1000')">Join Now</button>
+                <button class="btn" style="width:100%" onclick="openModal('Silver Plan', '1000')">Choose Silver</button>
             </div>
 
-            <div class="plan-card" style="border-color: var(--primary);">
-                <div style="position: absolute; top:0; right:0; background:var(--primary); padding: 5px 10px; font-size: 0.8rem;">MOST POPULAR</div>
+            <div class="plan-card popular">
+                <div class="tag">BEST VALUE</div>
                 <h3>Gold</h3>
                 <div class="price">₹2000<small>/mo</small></div>
                 <ul class="features">
                     <li>Full Day Access</li>
                     <li>Cardio + Weights</li>
-                    <li>Steam Bath (Weekly)</li>
+                    <li>Steam Bath (2x Month)</li>
                     <li>Personal Locker</li>
                 </ul>
-                <button class="btn" onclick="openModal('Gold Plan', '2000')">Join Now</button>
+                <button class="btn" style="width:100%" onclick="openModal('Gold Plan', '2000')">Choose Gold</button>
             </div>
 
             <div class="plan-card">
@@ -171,68 +255,124 @@
                     <li>All Gold Benefits</li>
                     <li>Personal Trainer (3 Sessions)</li>
                     <li>Diet Consultation</li>
-                    <li>Free T-Shirt</li>
+                    <li>Free Gym T-Shirt</li>
                 </ul>
-                <button class="btn" onclick="openModal('Platinum Plan', '5000')">Join Now</button>
+                <button class="btn" style="width:100%" onclick="openModal('Platinum Plan', '5000')">Choose Platinum</button>
             </div>
 
         </div>
     </section>
 
+    <section id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <details>
+                <summary>What are the gym timings?</summary>
+                <div class="faq-answer">We are open from 5:00 AM to 10:00 PM, Monday to Saturday. Sunday is 6:00 AM to 12:00 PM.</div>
+            </details>
+            <details>
+                <summary>Is Personal Training included?</summary>
+                <div class="faq-answer">Personal training is included in the Platinum plan. For other plans, it is available as a separate add-on.</div>
+            </details>
+            <details>
+                <summary>Can I freeze my membership?</summary>
+                <div class="faq-answer">Yes, you can freeze your membership for up to 1 month in case of travel or medical issues (requires prior notice).</div>
+            </details>
+        </div>
+    </section>
+
+    <iframe class="map-section" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.064223253724!2d77.20902131508246!3d28.62779898241978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd37b741d057%3A0xcdee88e47393c3f1!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1628160000000!5m2!1sen!2sin" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+    <footer id="contact">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo">Iron<span>Lifters</span></div>
+                <p style="margin-top: 20px;">We are more than just a gym. We are a community of individuals striving for greatness.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#plans">Plans</a></li>
+                    <li><a href="#trainers">Trainers</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p>📍 123 Fitness Street, City Name</p>
+                <p>📞 +91 98765 43210</p>
+                <p>✉️ support@ironlifters.com</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2024 IronLifters Gym. All rights reserved.
+        </div>
+    </footer>
+
     <div id="paymentModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             
-            <h3 class="step-title">Step 1: Scan & Pay</h3>
-            <p>Please pay <strong>₹<span id="modalPrice">0</span></strong> for <span id="modalPlan">Plan</span></p>
+            <h3 style="color: var(--primary); margin-bottom: 10px;">Step 1: Scan to Pay</h3>
+            <p>Plan: <strong id="modalPlan" style="color: white;"></strong> | Amount: <strong style="color: var(--primary);">₹<span id="modalPrice"></span></strong></p>
             
             <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" 
-                 alt="Scan QR" style="width:150px; margin: 15px auto; border: 5px solid white;">
+                 alt="Scan QR" style="width:160px; margin: 20px auto; border: 4px solid white; border-radius: 5px;">
             
-            <p><small>Accepted: GPay, PhonePe, Paytm</small></p>
+            <p style="color: #888; font-size: 0.9rem;">Accepting GPay, PhonePe, Paytm</p>
             <hr style="border-color: #333; margin: 20px 0;">
 
-            <h3 class="step-title">Step 2: Enter Details</h3>
-            <p style="margin-bottom: 15px;">Fill this form so we can create your membership card.</p>
+            <h3 style="color: var(--primary); margin-bottom: 10px;">Step 2: Enter Details</h3>
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;">Fill this after payment to activate membership.</p>
             
-            <iframe 
-                src="https://docs.google.com/forms/d/e/1FAIpQLSdc.../viewform?embedded=true" 
-                width="100%" height="400" frameborder="0" marginheight="0" marginwidth="0">
-                Loading Form...
-            </iframe>
+            <div style="background: #222; height: 150px; display: flex; align-items: center; justify-content: center; border-radius: 5px; color: #555;">
+                [ Paste Google Form Iframe Here ]
             </div>
+        </div>
     </div>
 
-    <footer id="contact">
-        <div class="footer-content">
-            <h3>IronLifters Gym</h3>
-            <p>123 Fitness Street, Main Market, City Name</p>
-            <p>Call/WhatsApp: +91 98765 43210</p>
-            <br>
-            <p>&copy; 2024 IronLifters Gym. All rights reserved.</p>
-        </div>
-    </footer>
-
     <script>
-        // Function to open the modal with dynamic data
+        // --- MODAL LOGIC ---
         function openModal(planName, planPrice) {
             document.getElementById('modalPlan').innerText = planName;
             document.getElementById('modalPrice').innerText = planPrice;
             document.getElementById('paymentModal').style.display = "block";
+            document.body.style.overflow = "hidden"; // Prevent background scrolling
         }
 
-        // Function to close the modal
         function closeModal() {
             document.getElementById('paymentModal').style.display = "none";
+            document.body.style.overflow = "auto";
         }
 
-        // Close modal if user clicks outside the box
         window.onclick = function(event) {
             if (event.target == document.getElementById('paymentModal')) {
                 closeModal();
             }
         }
-    </script>
 
+        // --- BMI LOGIC ---
+        function calculateBMI() {
+            let weight = parseFloat(document.getElementById('weight').value);
+            let height = parseFloat(document.getElementById('height').value);
+            let resultDiv = document.getElementById('bmi-result');
+            
+            if(weight > 0 && height > 0){
+                let bmi = (weight / ((height/100) * (height/100))).toFixed(1);
+                let status = "";
+                let color = "";
+
+                if(bmi < 18.5) { status = "Underweight"; color = "#ffcc00"; }
+                else if(bmi < 25) { status = "Healthy"; color = "#00cc00"; }
+                else if(bmi < 30) { status = "Overweight"; color = "#ff9900"; }
+                else { status = "Obese"; color = "#ff3b3b"; }
+                
+                resultDiv.innerHTML = `Your BMI: <span style="color:${color}">${bmi}</span> (${status})`;
+            } else {
+                resultDiv.innerHTML = "<span style='color:red; font-size: 1rem;'>Please enter valid numbers!</span>";
+            }
+        }
+    </script>
 </body>
 </html>
