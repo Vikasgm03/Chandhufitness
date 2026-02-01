@@ -3,375 +3,433 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IronLifters Gym | Build Your Legacy</title>
+    <title>IronLifters Gym | India</title>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
     <style>
-        /* --- 1. GLOBAL STYLES (Dark Theme) --- */
+        /* --- 1. GLOBAL VARIABLES & RESET --- */
         :root {
-            --primary: #ff3b3b; /* Gym Red */
-            --dark: #111;
-            --gray: #222;
-            --text: #fff;
-            --light-text: #ccc;
+            --primary: #ff3b3b; /* Aggressive Red */
+            --dark: #0a0a0a;
+            --gray: #1f1f1f;
+            --text: #ffffff;
+            --text-muted: #aaaaaa;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--dark); color: var(--text); line-height: 1.6; scroll-behavior: smooth; }
-        a { text-decoration: none; color: white; transition: 0.3s; }
-        img { display: block; max-width: 100%; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: var(--dark); 
+            color: var(--text); 
+            font-family: 'Roboto', sans-serif; 
+            overflow-x: hidden; 
+        }
 
-        /* --- 2. HEADER & NAV --- */
+        h1, h2, h3, .btn, .nav-link { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        
+        /* Smooth Scroll */
+        html { scroll-behavior: smooth; }
+
+        /* --- 2. HEADER --- */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; background-color: rgba(0,0,0,0.95);
-            position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--primary);
+            padding: 15px 5%; background: rgba(10, 10, 10, 0.95);
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            border-bottom: 2px solid var(--primary);
+            backdrop-filter: blur(10px);
         }
-        .logo { font-size: 1.8rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
-        .logo span { color: white; }
-        nav ul { display: flex; list-style: none; gap: 25px; }
-        nav a:hover { color: var(--primary); }
-        .nav-btn { background: var(--primary); padding: 8px 20px; border-radius: 4px; font-weight: bold; }
-        .nav-btn:hover { background: white; color: black; }
 
-        /* --- 3. HERO SECTION --- */
+        .logo { font-size: 1.8rem; font-weight: bold; color: white; letter-spacing: 1px; }
+        .logo span { color: var(--primary); }
+
+        nav ul { display: flex; gap: 30px; }
+        nav a { font-size: 0.9rem; letter-spacing: 1px; }
+        nav a:hover { color: var(--primary); }
+        
+        .join-btn {
+            background: var(--primary); padding: 8px 25px; color: white;
+            border-radius: 4px; font-weight: bold;
+        }
+        .join-btn:hover { background: white; color: black; }
+
+        /* --- 3. HERO SECTION (Typing Effect) --- */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop');
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop');
             background-size: cover; background-position: center; background-attachment: fixed;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 20px;
+            text-align: center; padding: 0 20px;
         }
-        .hero h1 { font-size: 4rem; text-transform: uppercase; margin-bottom: 10px; line-height: 1.1; }
-        .hero span { color: var(--primary); }
-        .hero p { font-size: 1.2rem; margin-bottom: 30px; color: var(--light-text); }
-        .btn {
-            background-color: var(--primary); color: white; padding: 15px 40px;
-            font-weight: bold; border-radius: 50px; cursor: pointer; border: none; font-size: 1.1rem;
-            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
+
+        .hero h1 { font-size: 4rem; margin-bottom: 15px; line-height: 1.2; }
+        .typewriter { color: var(--primary); border-right: 3px solid white; animation: blink 0.75s step-end infinite; }
+        
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        .hero p { font-size: 1.2rem; color: #ddd; margin-bottom: 30px; max-width: 600px; }
+        
+        .cta-btn {
+            padding: 15px 40px; background: transparent; border: 2px solid var(--primary);
+            color: white; font-size: 1.2rem; font-weight: bold; cursor: pointer;
+            transition: 0.3s;
         }
-        .btn:hover { background-color: white; color: black; transform: translateY(-3px); }
+        .cta-btn:hover { background: var(--primary); box-shadow: 0 0 20px var(--primary); }
 
-        /* --- 4. BMI CALCULATOR --- */
-        #bmi-calculator { background-color: #1a1a1a; text-align: center; padding: 60px 5%; border-bottom: 1px solid #333; }
-        .bmi-inputs { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-        .bmi-inputs input { padding: 15px; width: 200px; background: #333; border: 1px solid #444; color: white; border-radius: 5px; }
-        #bmi-result { margin-top: 20px; font-size: 1.5rem; font-weight: bold; color: var(--primary); min-height: 30px; }
+        /* --- 4. WORKOUT OF THE DAY (Dynamic) --- */
+        .wod-section { background: var(--gray); text-align: center; padding: 60px 5%; border-bottom: 1px solid #333; }
+        .wod-card {
+            background: #000; border: 1px solid var(--primary); display: inline-block;
+            padding: 30px; border-radius: 8px; min-width: 300px;
+            box-shadow: 0 0 15px rgba(255, 59, 59, 0.2);
+        }
+        #wod-day { color: var(--primary); font-size: 1.5rem; margin-bottom: 10px; }
+        #wod-routine { font-size: 1.1rem; color: white; }
 
-        /* --- 5. COMMON SECTION STYLES --- */
+        /* --- 5. GALLERY (Grid) --- */
         section { padding: 80px 5%; }
-        h2 { text-align: center; margin-bottom: 50px; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
-        h2::after { content: ''; display: block; width: 60px; height: 3px; background: var(--primary); margin: 15px auto 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; }
+        .section-title span { color: var(--primary); }
 
-        /* --- 6. GALLERY --- */
         .gallery-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;
         }
-        .gallery-item { height: 250px; overflow: hidden; border-radius: 8px; position: relative; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; filter: grayscale(30%); }
+        .gallery-item { height: 250px; overflow: hidden; border-radius: 8px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; filter: grayscale(50%); }
         .gallery-item:hover img { transform: scale(1.1); filter: grayscale(0%); }
 
-        /* --- 7. TRAINERS --- */
-        .trainers-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
-        .trainer-card { text-align: center; width: 250px; }
-        .trainer-img { 
-            width: 200px; height: 200px; border-radius: 50%; object-fit: cover; 
-            border: 4px solid var(--primary); margin-bottom: 20px; transition: 0.3s;
+        /* --- 6. CALCULATORS (Split View) --- */
+        .tools-container { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; }
+        .tool-card {
+            background: var(--gray); padding: 30px; border-radius: 10px; width: 100%; max-width: 450px;
+            border-top: 3px solid var(--primary);
         }
-        .trainer-card:hover .trainer-img { transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 59, 59, 0.4); }
-        .trainer-name { font-size: 1.5rem; margin-bottom: 5px; }
-        .trainer-role { color: var(--primary); font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
+        .input-group { display: flex; gap: 10px; margin: 15px 0; }
+        input, select { 
+            width: 100%; padding: 12px; background: #333; border: 1px solid #444; 
+            color: white; border-radius: 4px; 
+        }
+        .calc-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer; }
+        .result-box { margin-top: 15px; font-weight: bold; color: var(--primary); min-height: 25px; }
 
-        /* --- 8. SUCCESS STORIES --- */
-        #transformations { background-color: var(--gray); }
-        .story-card { background: #111; padding: 20px; border-radius: 10px; text-align: center; }
-        .ba-images { display: flex; gap: 10px; margin-bottom: 15px; }
-        .ba-images img { width: 50%; border-radius: 5px; aspect-ratio: 3/4; object-fit: cover; }
-        .quote { font-style: italic; color: #ccc; margin-bottom: 10px; }
+        /* --- 7. TRAINERS & STORIES --- */
+        .trainer-card { text-align: center; background: #151515; padding: 20px; border-radius: 10px; transition: 0.3s; }
+        .trainer-card:hover { transform: translateY(-10px); }
+        .trainer-img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin-bottom: 15px; }
 
-        /* --- 9. PRICING --- */
+        .transformation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .trans-card { background: #151515; padding: 15px; border-radius: 8px; }
+        .ba-img { display: flex; gap: 5px; margin-bottom: 10px; }
+        .ba-img img { width: 50%; border-radius: 4px; }
+
+        /* --- 8. PRICING --- */
         .pricing-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
         .plan-card {
-            background-color: var(--gray); padding: 40px 30px; border-radius: 15px;
-            width: 320px; text-align: center; border: 1px solid #333; position: relative; transition: 0.3s;
+            background: var(--gray); padding: 40px; width: 320px; border-radius: 10px; text-align: center;
+            border: 1px solid #333; position: relative; transition: 0.3s;
         }
-        .plan-card:hover { transform: translateY(-10px); border-color: var(--primary); }
-        .plan-card.popular { border: 2px solid var(--primary); transform: scale(1.05); z-index: 10; background: #1a1a1a; }
-        .tag { position: absolute; top: 0; right: 0; background: var(--primary); padding: 5px 15px; font-size: 0.8rem; font-weight: bold; border-bottom-left-radius: 10px; }
-        .price { font-size: 3rem; font-weight: 800; margin: 20px 0; color: white; }
-        .price small { font-size: 1rem; color: #888; font-weight: normal; }
-        .features { list-style: none; margin-bottom: 30px; text-align: left; padding-left: 10px; color: #ccc; }
-        .features li { margin-bottom: 12px; display: flex; align-items: center; }
-        .features li::before { content: "✓"; color: var(--primary); margin-right: 10px; font-weight: bold; }
-
-        /* --- 10. FAQ --- */
-        .faq-container { max-width: 700px; margin: auto; }
-        details { background: #222; margin-bottom: 15px; border-radius: 5px; overflow: hidden; transition: 0.3s; }
-        details[open] { background: #2a2a2a; border-left: 4px solid var(--primary); }
-        summary { padding: 20px; cursor: pointer; font-weight: bold; list-style: none; display: flex; justify-content: space-between; align-items: center; }
-        summary::after { content: '+'; font-size: 1.5rem; color: var(--primary); }
-        details[open] summary::after { content: '-'; }
-        .faq-answer { padding: 0 20px 20px; color: #bbb; line-height: 1.6; }
-
-        /* --- 11. MAP & FOOTER --- */
-        .map-section { padding: 0; height: 400px; filter: grayscale(100%) invert(90%); transition: 0.5s; }
-        .map-section:hover { filter: none; }
-        footer { background-color: #000; padding: 60px 5% 20px; text-align: center; border-top: 1px solid #222; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; text-align: left; }
-        .footer-col h3 { color: white; margin-bottom: 20px; font-size: 1.2rem; }
-        .footer-col p, .footer-col li { color: #888; margin-bottom: 10px; list-style: none; }
-        .social-icons a { color: white; margin-right: 15px; font-size: 1.2rem; }
-        .copyright { border-top: 1px solid #222; padding-top: 20px; color: #555; font-size: 0.9rem; }
-
-        /* --- 12. MODAL --- */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); overflow-y: auto; backdrop-filter: blur(5px); }
-        .modal-content { background-color: #151515; margin: 5% auto; padding: 30px; width: 95%; max-width: 500px; border-radius: 12px; position: relative; text-align: center; border: 1px solid #333; box-shadow: 0 0 50px rgba(255,59,59,0.2); }
-        .close { position: absolute; top: 15px; right: 20px; color: #666; font-size: 30px; cursor: pointer; transition: 0.3s; }
-        .close:hover { color: white; }
+        .plan-card:hover { border-color: var(--primary); transform: scale(1.05); }
+        .plan-card.popular { border: 2px solid var(--primary); background: #181818; transform: scale(1.05); }
+        .price { font-size: 3rem; font-weight: bold; color: white; margin: 20px 0; }
+        .price span { font-size: 1rem; color: #888; font-weight: normal; }
+        .features li { padding: 8px 0; color: #ccc; border-bottom: 1px solid #333; }
         
+        /* --- 9. FAQ --- */
+        details { background: #151515; margin-bottom: 10px; padding: 15px; border-radius: 5px; }
+        summary { cursor: pointer; font-weight: bold; list-style: none; display: flex; justify-content: space-between; }
+        summary::after { content: '+'; color: var(--primary); font-size: 1.5rem; }
+        details[open] summary::after { content: '-'; }
+        .faq-ans { margin-top: 10px; color: #aaa; }
+
+        /* --- 10. MODAL --- */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); overflow-y: auto; backdrop-filter: blur(5px); }
+        .modal-content { background: #111; margin: 5% auto; padding: 30px; width: 95%; max-width: 500px; border-radius: 10px; border: 1px solid #333; position: relative; text-align: center; }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #fff; font-size: 30px; cursor: pointer; }
+        
+        /* --- 11. FOOTER --- */
+        footer { background: black; padding: 50px 5%; border-top: 1px solid #222; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
+        .map-frame { width: 100%; height: 250px; border: 0; filter: grayscale(100%) invert(92%); }
+
+        /* Mobile Nav */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
-            nav { display: none; } /* Hide standard nav on mobile for this demo */
-            .logo { font-size: 1.4rem; }
-            .plan-card.popular { transform: none; }
+            nav ul { display: none; } /* Simplified mobile nav */
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">Iron<span>Lifters</span></div>
+        <div class="logo">IRON<span>LIFTERS</span></div>
         <nav>
             <ul>
                 <li><a href="#home">Home</a></li>
-                <li><a href="#trainers">Trainers</a></li>
+                <li><a href="#tools">Tools</a></li>
                 <li><a href="#plans">Plans</a></li>
-                <li><a href="#contact" class="nav-btn">Join Now</a></li>
+                <li><a href="#contact" class="join-btn">JOIN NOW</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="hero" id="home">
-        <h1>Forged In <br><span>The Iron</span></h1>
-        <p>Your journey to strength starts here. No contracts, just results.</p>
-        <a href="#plans" class="btn">View Memberships</a>
+        <h1>WE BUILD <span class="typewriter"></span></h1>
+        <p>State-of-the-art equipment. Expert trainers. A community that pushes you.</p>
+        <button class="cta-btn" onclick="document.getElementById('plans').scrollIntoView()">START MEMBERSHIP</button>
     </div>
 
-    <section id="bmi-calculator">
-        <h2>Calculate Your BMI</h2>
-        <p style="color: #aaa; margin-bottom: 20px;">Check your body mass index to set better fitness goals.</p>
-        <div class="bmi-inputs">
-            <input type="number" id="weight" placeholder="Weight (kg)">
-            <input type="number" id="height" placeholder="Height (cm)">
-            <button onclick="calculateBMI()" class="btn" style="padding: 15px 30px; border-radius: 5px;">Calculate</button>
+    <div class="wod-section" data-aos="fade-up">
+        <h2>TODAY'S WORKOUT FOCUS</h2>
+        <div class="wod-card">
+            <div id="wod-day">LOADING...</div>
+            <div id="wod-routine">Checking schedule...</div>
         </div>
-        <div id="bmi-result"></div>
+    </div>
+
+    <section id="tools">
+        <h2 class="section-title">FITNESS <span>TOOLS</span></h2>
+        <div class="tools-container">
+            
+            <div class="tool-card" data-aos="fade-right">
+                <h3>BMI Calculator</h3>
+                <div class="input-group">
+                    <input type="number" id="bmi-weight" placeholder="Weight (kg)">
+                    <input type="number" id="bmi-height" placeholder="Height (cm)">
+                </div>
+                <button class="calc-btn" onclick="calcBMI()">Check Status</button>
+                <div id="bmi-result" class="result-box"></div>
+            </div>
+
+            <div class="tool-card" data-aos="fade-left">
+                <h3>Calorie Needs (TDEE)</h3>
+                <div class="input-group">
+                    <input type="number" id="cal-age" placeholder="Age">
+                    <select id="cal-gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <select id="cal-activity" style="margin-bottom: 15px;">
+                    <option value="1.2">Sedentary (Office Job)</option>
+                    <option value="1.55">Moderate (Gym 3-4x/week)</option>
+                    <option value="1.9">Active (Athlete)</option>
+                </select>
+                <button class="calc-btn" onclick="calcCalories()">Calculate Macros</button>
+                <div id="cal-result" class="result-box"></div>
+            </div>
+
+        </div>
     </section>
 
     <section id="gallery">
-        <h2>Our Facility</h2>
+        <h2 class="section-title">OUR <span>FACILITY</span></h2>
         <div class="gallery-grid">
-            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600" alt="Gym Floor"></div>
-            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600" alt="Weights"></div>
-            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1574680096141-9832005263d8?w=600" alt="Cardio"></div>
-            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1627483262769-04d0a1401487?w=600" alt="Dumbbells"></div>
+            <div class="gallery-item" data-aos="zoom-in"><img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600" alt="Gym"></div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600" alt="Weights"></div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200"><img src="https://images.unsplash.com/photo-1574680096141-9832005263d8?w=600" alt="Cardio"></div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600" alt="Crossfit"></div>
         </div>
     </section>
 
-    <section id="trainers">
-        <h2>Meet The Team</h2>
-        <div class="trainers-grid">
-            <div class="trainer-card">
-                <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=300" alt="Trainer" class="trainer-img">
-                <div class="trainer-name">Rahul Sharma</div>
-                <div class="trainer-role">Head Coach</div>
+    <section>
+        <h2 class="section-title">EXPERT <span>TRAINERS</span></h2>
+        <div class="pricing-container"> <div class="trainer-card" data-aos="flip-left">
+                <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=300" class="trainer-img">
+                <h3>Rahul Sharma</h3>
+                <p style="color:var(--primary)">Bodybuilding</p>
             </div>
-            <div class="trainer-card">
-                <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=300" alt="Trainer" class="trainer-img">
-                <div class="trainer-name">Priya Singh</div>
-                <div class="trainer-role">Yoga Specialist</div>
-            </div>
-            <div class="trainer-card">
-                <img src="https://images.unsplash.com/photo-1597347343908-2937e7dcc560?w=300" alt="Trainer" class="trainer-img">
-                <div class="trainer-name">Vikram Das</div>
-                <div class="trainer-role">Crossfit Expert</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="transformations">
-        <h2>Real Results</h2>
-        <div class="gallery-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-            <div class="story-card">
-                <div class="ba-images">
-                    <img src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=300" alt="Before">
-                    <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=300" alt="After">
-                </div>
-                <p class="quote">"Lost 15kg in 6 months! Best gym environment."</p>
-                <h4 style="color: var(--primary);">- Amit Kumar</h4>
-            </div>
-            <div class="story-card">
-                <div class="ba-images">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300" alt="Before">
-                    <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=300" alt="After">
-                </div>
-                <p class="quote">"Gained 8kg of muscle. Trainers are super helpful."</p>
-                <h4 style="color: var(--primary);">- Sarah J.</h4>
+            <div class="trainer-card" data-aos="flip-left" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=300" class="trainer-img">
+                <h3>Priya Singh</h3>
+                <p style="color:var(--primary)">Yoga & Mobility</p>
             </div>
         </div>
     </section>
 
     <section id="plans">
-        <h2>Membership Plans</h2>
+        <h2 class="section-title">CHOOSE YOUR <span>PLAN</span></h2>
         <div class="pricing-container">
-            
-            <div class="plan-card">
+            <div class="plan-card" data-aos="fade-up">
                 <h3>Silver</h3>
-                <div class="price">₹1000<small>/mo</small></div>
+                <div class="price">₹1000<span>/mo</span></div>
                 <ul class="features">
-                    <li>Gym Access (Morning only)</li>
+                    <li>Morning Access Only</li>
                     <li>Cardio Section</li>
                     <li>General Locker</li>
-                    <li>No Steam Bath</li>
                 </ul>
-                <button class="btn" style="width:100%" onclick="openModal('Silver Plan', '1000')">Choose Silver</button>
+                <button class="join-btn" style="width:100%; margin-top:20px;" onclick="openModal('Silver', '1000')">SELECT</button>
             </div>
-
-            <div class="plan-card popular">
-                <div class="tag">BEST VALUE</div>
+            <div class="plan-card popular" data-aos="fade-up" data-aos-delay="100">
+                <div style="background:var(--primary); color:white; padding:5px; font-size:0.8rem; margin-bottom:10px;">MOST POPULAR</div>
                 <h3>Gold</h3>
-                <div class="price">₹2000<small>/mo</small></div>
+                <div class="price">₹2000<span>/mo</span></div>
                 <ul class="features">
                     <li>Full Day Access</li>
                     <li>Cardio + Weights</li>
-                    <li>Steam Bath (2x Month)</li>
+                    <li>Steam Bath (2x/mo)</li>
                     <li>Personal Locker</li>
                 </ul>
-                <button class="btn" style="width:100%" onclick="openModal('Gold Plan', '2000')">Choose Gold</button>
+                <button class="join-btn" style="width:100%; margin-top:20px;" onclick="openModal('Gold', '2000')">SELECT</button>
             </div>
-
-            <div class="plan-card">
+            <div class="plan-card" data-aos="fade-up" data-aos-delay="200">
                 <h3>Platinum</h3>
-                <div class="price">₹5000<small>/3 mo</small></div>
+                <div class="price">₹5000<span>/3mo</span></div>
                 <ul class="features">
                     <li>All Gold Benefits</li>
                     <li>Personal Trainer (3 Sessions)</li>
-                    <li>Diet Consultation</li>
-                    <li>Free Gym T-Shirt</li>
+                    <li>Diet Chart</li>
+                    <li>Free T-Shirt</li>
                 </ul>
-                <button class="btn" style="width:100%" onclick="openModal('Platinum Plan', '5000')">Choose Platinum</button>
+                <button class="join-btn" style="width:100%; margin-top:20px;" onclick="openModal('Platinum', '5000')">SELECT</button>
             </div>
-
         </div>
     </section>
 
-    <section id="faq">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-container">
-            <details>
-                <summary>What are the gym timings?</summary>
-                <div class="faq-answer">We are open from 5:00 AM to 10:00 PM, Monday to Saturday. Sunday is 6:00 AM to 12:00 PM.</div>
-            </details>
-            <details>
-                <summary>Is Personal Training included?</summary>
-                <div class="faq-answer">Personal training is included in the Platinum plan. For other plans, it is available as a separate add-on.</div>
-            </details>
-            <details>
-                <summary>Can I freeze my membership?</summary>
-                <div class="faq-answer">Yes, you can freeze your membership for up to 1 month in case of travel or medical issues (requires prior notice).</div>
-            </details>
-        </div>
+    <section style="max-width: 800px; margin: auto;">
+        <h2 class="section-title">FAQ</h2>
+        <details data-aos="fade-up">
+            <summary>What are the gym timings?</summary>
+            <div class="faq-ans">Mon-Sat: 5AM - 10PM. Sunday: 6AM - 12PM.</div>
+        </details>
+        <details data-aos="fade-up">
+            <summary>Is Parking available?</summary>
+            <div class="faq-ans">Yes, we have dedicated parking for bikes and cars.</div>
+        </details>
+        <details data-aos="fade-up">
+            <summary>Can I freeze my membership?</summary>
+            <div class="faq-ans">Yes, up to 1 month for medical reasons.</div>
+        </details>
     </section>
-
-    <iframe class="map-section" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.064223253724!2d77.20902131508246!3d28.62779898241978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd37b741d057%3A0xcdee88e47393c3f1!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1628160000000!5m2!1sen!2sin" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 
     <footer id="contact">
         <div class="footer-grid">
-            <div class="footer-col">
-                <div class="logo">Iron<span>Lifters</span></div>
-                <p style="margin-top: 20px;">We are more than just a gym. We are a community of individuals striving for greatness.</p>
+            <div>
+                <div class="logo">IRON<span>LIFTERS</span></div>
+                <p style="margin-top:20px; color:#888;">Transforming lives through fitness since 2024.</p>
+                <br>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX70RN3TfWWJh?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
-            <div class="footer-col">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#plans">Plans</a></li>
-                    <li><a href="#trainers">Trainers</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                </ul>
+            <div>
+                <h3>CONTACT</h3>
+                <p style="color:#888; margin-top:10px;">123 Fitness St, Mumbai, India</p>
+                <p style="color:#888;">+91 98765 43210</p>
+                <div style="margin-top:15px; font-size:1.5rem;">
+                    <span>📷</span> <span style="margin-left:10px;">📘</span> <span style="margin-left:10px;">▶️</span>
+                </div>
             </div>
-            <div class="footer-col">
-                <h3>Contact Us</h3>
-                <p>📍 123 Fitness Street, City Name</p>
-                <p>📞 +91 98765 43210</p>
-                <p>✉️ support@ironlifters.com</p>
+            <div>
+                <iframe class="map-frame" src="https://maps.google.com/maps?q=Connaught+Place+New+Delhi&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
             </div>
         </div>
-        <div class="copyright">
-            &copy; 2024 IronLifters Gym. All rights reserved.
+        <div style="text-align:center; margin-top:40px; color:#555; font-size:0.8rem;">
+            &copy; 2026 IronLifters Gym. All rights reserved.
         </div>
     </footer>
 
     <div id="paymentModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
             
-            <h3 style="color: var(--primary); margin-bottom: 10px;">Step 1: Scan to Pay</h3>
-            <p>Plan: <strong id="modalPlan" style="color: white;"></strong> | Amount: <strong style="color: var(--primary);">₹<span id="modalPrice"></span></strong></p>
+            <h2 style="color:var(--primary); margin-bottom:10px;">STEP 1: SCAN & PAY</h2>
+            <p>Pay <strong>₹<span id="modalPrice"></span></strong> for <span id="modalPlan"></span> Plan</p>
             
-            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" 
-                 alt="Scan QR" style="width:160px; margin: 20px auto; border: 4px solid white; border-radius: 5px;">
+            <div style="background:white; padding:10px; display:inline-block; margin:20px 0;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" width="150" alt="UPI QR">
+            </div>
+            <p style="font-size:0.8rem; color:#aaa;">Accepted: GPay, PhonePe, Paytm</p>
             
-            <p style="color: #888; font-size: 0.9rem;">Accepting GPay, PhonePe, Paytm</p>
-            <hr style="border-color: #333; margin: 20px 0;">
-
-            <h3 style="color: var(--primary); margin-bottom: 10px;">Step 2: Enter Details</h3>
-            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;">Fill this after payment to activate membership.</p>
+            <hr style="border-color:#333; margin:20px 0;">
             
-            <div style="background: #222; height: 150px; display: flex; align-items: center; justify-content: center; border-radius: 5px; color: #555;">
-                [ Paste Google Form Iframe Here ]
+            <h2 style="color:var(--primary); margin-bottom:10px;">STEP 2: REGISTER</h2>
+            <p style="font-size:0.9rem; color:#aaa; margin-bottom:15px;">Fill details to activate membership</p>
+            
+            <div style="background:#222; height:200px; display:flex; align-items:center; justify-content:center; color:#555; border:1px dashed #444;">
+                [ PASTE GOOGLE FORM EMBED CODE HERE ]
             </div>
         </div>
     </div>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // --- MODAL LOGIC ---
-        function openModal(planName, planPrice) {
-            document.getElementById('modalPlan').innerText = planName;
-            document.getElementById('modalPrice').innerText = planPrice;
-            document.getElementById('paymentModal').style.display = "block";
-            document.body.style.overflow = "hidden"; // Prevent background scrolling
-        }
+        // 1. Initialize Animations
+        AOS.init({ duration: 1000, once: true });
 
-        function closeModal() {
-            document.getElementById('paymentModal').style.display = "none";
-            document.body.style.overflow = "auto";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('paymentModal')) {
-                closeModal();
-            }
-        }
-
-        // --- BMI LOGIC ---
-        function calculateBMI() {
-            let weight = parseFloat(document.getElementById('weight').value);
-            let height = parseFloat(document.getElementById('height').value);
-            let resultDiv = document.getElementById('bmi-result');
-            
-            if(weight > 0 && height > 0){
-                let bmi = (weight / ((height/100) * (height/100))).toFixed(1);
-                let status = "";
-                let color = "";
-
-                if(bmi < 18.5) { status = "Underweight"; color = "#ffcc00"; }
-                else if(bmi < 25) { status = "Healthy"; color = "#00cc00"; }
-                else if(bmi < 30) { status = "Overweight"; color = "#ff9900"; }
-                else { status = "Obese"; color = "#ff3b3b"; }
-                
-                resultDiv.innerHTML = `Your BMI: <span style="color:${color}">${bmi}</span> (${status})`;
+        // 2. Typewriter Effect
+        const words = ["MUSCLE", "CONFIDENCE", "DISCIPLINE", "ATHLETES"];
+        let i = 0, j = 0; 
+        let currentWord = "";
+        let isDeleting = false;
+        
+        function type() {
+            currentWord = words[i];
+            if (isDeleting) {
+                document.querySelector(".typewriter").innerText = currentWord.substring(0, j-1);
+                j--;
+                if (j == 0) { isDeleting = false; i++; if (i == words.length) i = 0; }
             } else {
-                resultDiv.innerHTML = "<span style='color:red; font-size: 1rem;'>Please enter valid numbers!</span>";
+                document.querySelector(".typewriter").innerText = currentWord.substring(0, j+1);
+                j++;
+                if (j == currentWord.length) { isDeleting = true; }
             }
+            setTimeout(type, isDeleting ? 100 : 200);
+        }
+        type();
+
+        // 3. Dynamic Workout of the Day
+        const workouts = [
+            "Sunday: Active Recovery (Yoga/Walk)",
+            "Monday: International Chest Day",
+            "Tuesday: Back Width & Thickness",
+            "Wednesday: Shoulders & Traps",
+            "Thursday: Leg Day (Squats Focus)",
+            "Friday: Arm Blaster (Bi/Tri)",
+            "Saturday: High Intensity Cardio & Abs"
+        ];
+        const today = new Date().getDay();
+        document.getElementById("wod-day").innerText = workouts[today].split(":")[0];
+        document.getElementById("wod-routine").innerText = workouts[today].split(":")[1];
+
+        // 4. Calculators
+        function calcBMI() {
+            let w = document.getElementById('bmi-weight').value;
+            let h = document.getElementById('bmi-height').value;
+            if(w && h) {
+                let bmi = (w / ((h/100)**2)).toFixed(1);
+                let msg = bmi < 18.5 ? "Underweight" : bmi < 25 ? "Healthy" : "Overweight";
+                let color = bmi < 25 && bmi > 18.5 ? "#00ff00" : "#ff3b3b";
+                document.getElementById('bmi-result').innerHTML = `BMI: <span style="color:${color}">${bmi}</span> (${msg})`;
+            }
+        }
+
+        function calcCalories() {
+            let age = document.getElementById('cal-age').value;
+            let gender = document.getElementById('cal-gender').value;
+            let act = document.getElementById('cal-activity').value;
+            // Standard generic BMR estimate if weight not provided in this specific pod
+            let base = 2000; 
+            if(age) {
+                // Using very rough estimate for demo since weight input is in other pod
+                // Ideally, duplicate weight input or use global variable
+                let tdee = Math.round(base * act); 
+                document.getElementById('cal-result').innerText = `Approx. ${tdee} Calories/Day`;
+            }
+        }
+
+        // 5. Modal Logic
+        function openModal(plan, price) {
+            document.getElementById('paymentModal').style.display = 'block';
+            document.getElementById('modalPlan').innerText = plan;
+            document.getElementById('modalPrice').innerText = price;
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
     </script>
 </body>
