@@ -217,6 +217,7 @@
 
                     <label>PAYMENT ID (UTR)</label>
                     <input type="text" id="userTxn" placeholder="Enter Payment UTR">
+
                     <button type="submit" class="submit-btn">
                         CONFIRM & SEND <i class="fab fa-whatsapp" style="margin-left:8px"></i>
                     </button>
@@ -250,30 +251,6 @@
         function updatePaymentDetails() {
             const select = document.getElementById('planSelect');
             const customBox = document.getElementById('customAmountBox');
-            
-            if (select.value === "CUSTOM") {
-                customBox.style.display = "block";
-                document.getElementById('displayPrice').innerText = "0";
-                document.getElementById('dynamicQR').src = ""; // Clear QR until amount entered
-                return;
-            } else {
-                customBox.style.display = "none";
-            }
-
-            if(select.value === "none") {
-                document.getElementById('displayPrice').innerText = "0";
-                document.getElementById('dynamicQR').src = "";
-                return;
-            }
-
-            const selectedOption = select.options[select.selectedIndex];
-            const price = selectedOption.getAttribute('data-price');
-            
-            generateQR(price);
-        // --- PAYMENT LOGIC ---
-        function updatePaymentDetails() {
-            const select = document.getElementById('planSelect');
-            const customBox = document.getElementById('customAmountBox');
             const qrImage = document.getElementById('dynamicQR');
             
             // 1. Handle Custom Plan
@@ -292,7 +269,7 @@
             if (select.value === "none") {
                 document.getElementById('displayPrice').innerText = "0";
                 // Show default "Select Plan" image
-                qrImage.src = "https://via.placeholder.com/250x250.png?text=Select+Plan";
+                qrImage.src = "images/select_plan.png";
                 return;
             }
 
