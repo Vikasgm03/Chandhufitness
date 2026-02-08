@@ -776,109 +776,57 @@
     </a>
 </p>
         
-        <div class="dev-credit-wrapper">
+       <div class="dev-credit-wrapper">
     <a href="https://www.linkedin.com/in/vikas-gm-viewprofile/" target="_blank" class="dev-glow-link">
         <i class="fab fa-linkedin-in"></i>
-        <span class="dev-text">Developed by <span class="dev-name">VIKAS G M</span></span>
+        <span>Developed by <strong style="color:#fff;">VIKAS G M</strong></span>
     </a>
 </div>
 
 <style>
-    /* Wrapper to center align */
     .dev-credit-wrapper {
         display: flex;
         justify-content: center;
-        align-items: center;
-        padding: 30px 0;
+        padding: 20px 0; /* Reduced spacing around it */
         width: 100%;
     }
 
-    /* The Glowing Link Button */
     .dev-glow-link {
-        position: relative;
         display: inline-flex;
         align-items: center;
-        gap: 12px;
-        padding: 12px 35px;
+        gap: 8px; /* Closer together */
+        
+        /* SMALLER SIZE */
+        padding: 6px 18px; 
+        font-size: 0.75rem; /* Smaller text */
+        
         text-decoration: none;
-        color: #fff;
-        font-family: 'Oswald', sans-serif;
+        color: rgba(255,255,255,0.7);
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: 1px;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: 600;
-        font-size: 0.9rem;
         
-        /* Not solid - transparent background with glowing border */
+        border: 1px solid var(--primary); /* Thinner border */
+        border-radius: 30px;
         background: transparent;
-        border: 2px solid var(--primary); /* Using your theme's red */
-        border-radius: 50px;
         
-        /* Initial subtle glow */
-        box-shadow: 0 0 10px rgba(255, 59, 59, 0.3), inset 0 0 5px rgba(255, 59, 59, 0.2);
-        transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-        overflow: hidden;
-        z-index: 1;
+        /* Subtle Glow */
+        box-shadow: 0 0 8px rgba(255, 59, 59, 0.2);
+        transition: all 0.3s ease;
     }
 
-    /* The Icon */
     .dev-glow-link i {
-        font-size: 1.3rem;
+        font-size: 0.9rem; /* Smaller icon */
         color: var(--primary);
-        transition: all 0.5s ease;
     }
 
-    /* Name highlight */
-    .dev-name {
-        color: var(--primary);
-        text-shadow: 0 0 5px var(--primary-glow);
-        transition: all 0.5s ease;
-    }
-
-    /* --- HOVER EFFECTS (The Impressive Part) --- */
-    
-    /* Intensify the glow on the container */
+    /* HOVER EFFECT */
     .dev-glow-link:hover {
-        /* Make border look like pure light */
-        border-color: transparent; 
-        
-        /* Strong outer and inner neon glow */
-        box-shadow: 
-            0 0 20px var(--primary), 
-            0 0 40px var(--primary), 
-            inset 0 0 15px var(--primary);
-            
-        transform: translateY(-5px) scale(1.05);
-        background: rgba(255, 59, 59, 0.05); /* Very slight tint */
-    }
-
-    /* Make text turn white and glow */
-    .dev-glow-link:hover .dev-text,
-    .dev-glow-link:hover .dev-name {
-        color: white;
-        text-shadow: 0 0 10px #fff, 0 0 20px var(--primary);
-    }
-
-    /* Icon animation */
-    .dev-glow-link:hover i {
-        color: white;
-        transform: rotate(360deg) scale(1.2);
-        filter: drop-shadow(0 0 5px #fff);
-    }
-
-    /* Sliding light effect overlay */
-    .dev-glow-link::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-        transition: 0.6s;
-        z-index: -1;
-    }
-    .dev-glow-link:hover::before {
-        left: 100%;
+        background: rgba(255, 59, 59, 0.1);
+        border-color: transparent;
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px var(--primary), inset 0 0 10px var(--primary);
     }
 </style>
     </div>
