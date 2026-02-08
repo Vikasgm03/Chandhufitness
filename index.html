@@ -328,56 +328,19 @@ footer::before {
     margin-bottom: 60px;
 }
 
-/* --- NEW: COMPACT BRANDING STYLES --- */
-.brand-col {
-    max-width: 300px; /* Limits width for a cleaner look */
-}
-
+/* --- LOGO ADJUSTMENT (Reduced Size) --- */
 .footer-logo {
     font-family: 'Oswald', sans-serif;
-    font-size: 1.4rem; /* Reduced from Header size */
+    font-size: 1.4rem; /* Reduced from original size */
     font-weight: 700;
     color: white;
     letter-spacing: 1px;
     margin-bottom: 15px;
+    display: inline-block;
 }
 .footer-logo span { color: var(--primary); }
 
-.footer-bio {
-    color: #888;
-    line-height: 1.6;
-    margin-bottom: 25px;
-    font-size: 0.9rem;
-    font-weight: 300;
-}
-
-/* --- NEW: GLASS SOCIAL BUTTONS --- */
-.social-group {
-    display: flex;
-    gap: 12px;
-}
-
-.social-btn {
-    width: 35px;
-    height: 35px;
-    background: rgba(255,255,255,0.05); /* Glass Background */
-    border: 1px solid rgba(255,255,255,0.1);
-    display: flex; justify-content: center; align-items: center;
-    border-radius: 50%;
-    color: #ccc;
-    text-decoration: none;
-    transition: 0.3s all ease;
-}
-
-.social-btn:hover {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: white;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(255, 59, 59, 0.3);
-}
-
-/* --- STANDARD LINKS & CONTACT --- */
+/* Column Headings */
 .footer-col h3 {
     font-size: 1.2rem;
     margin-bottom: 25px;
@@ -385,26 +348,51 @@ footer::before {
     letter-spacing: 1px;
 }
 
-.footer-links li { margin-bottom: 12px; }
+.footer-bio {
+    color: #888;
+    line-height: 1.8;
+    margin: 20px 0;
+    font-size: 0.95rem;
+}
+
+/* Quick Links Hover Effect */
+.footer-links li { margin-bottom: 15px; }
 .footer-links a {
     color: #bbb;
     font-size: 0.95rem;
     transition: 0.3s;
-    text-decoration: none;
     display: inline-block;
 }
 .footer-links a:hover {
     color: var(--primary);
-    transform: translateX(5px);
+    transform: translateX(5px); /* Slide right on hover */
 }
 
+/* Social Icons */
+.social-icons { display: flex; gap: 15px; margin-top: 20px; }
+.social-icons a {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.05);
+    display: flex; justify-content: center; align-items: center;
+    border-radius: 50%;
+    color: white;
+    transition: 0.3s;
+    border: 1px solid transparent;
+}
+.social-icons a:hover {
+    background: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+    transform: translateY(-3px);
+}
+
+/* Contact Info */
 .contact-row {
     display: flex; align-items: center; gap: 15px;
     margin-bottom: 20px; color: #bbb; font-size: 0.95rem;
 }
 .contact-row i { color: var(--primary); font-size: 1.1rem; }
 
-/* --- BOTTOM BAR & DEV LINK --- */
+/* --- BOTTOM BAR & DEV BUTTON --- */
 .footer-bottom {
     border-top: 1px solid rgba(255,255,255,0.05);
     padding-top: 30px;
@@ -417,46 +405,116 @@ footer::before {
 
 .copyright { color: #555; font-size: 0.85rem; }
 
-/* Wrapper to center dev link */
-.dev-credit-wrapper {
-    display: flex;
-    align-items: center;
-}
-
-/* Using the Reduced Size Glow Link from previous step */
-.dev-glow-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 18px; 
-    font-size: 0.75rem; 
+/* Premium Developer Button */
+.dev-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    color: #aaa;
+    font-size: 0.85rem;
+    font-weight: 600;
     text-decoration: none;
-    color: rgba(255,255,255,0.7);
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    border: 1px solid var(--primary);
-    border-radius: 30px;
-    background: transparent;
-    box-shadow: 0 0 8px rgba(255, 59, 59, 0.2);
-    transition: all 0.3s ease;
+    transition: 0.4s;
 }
-.dev-glow-link i { font-size: 0.9rem; color: var(--primary); }
-.dev-glow-link:hover {
-    background: rgba(255, 59, 59, 0.1);
-    border-color: transparent;
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px var(--primary), inset 0 0 10px var(--primary);
+.dev-btn i { color: #0077b5; font-size: 1.1rem; } /* LinkedIn Blue */
+
+.dev-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #0077b5;
+    color: white;
+    box-shadow: 0 0 20px rgba(0, 119, 181, 0.3);
 }
 
-/* Mobile Adjustments */
+/* Mobile Footer Adjustments */
 @media (max-width: 768px) {
     .footer-bottom { justify-content: center; text-align: center; }
     .footer-col { text-align: center; }
-    .social-group { justify-content: center; }
+    .social-icons { justify-content: center; }
     .contact-row { justify-content: center; }
-    .brand-col { max-width: 100%; } /* Full width on mobile */
+}
+
+/* --- 9. FAQ REDESIGN (Minimalist & Clean) --- */
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+details {
+    /* Transparent background for a clean look */
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle divider line */
+    margin-bottom: 0;
+    transition: 0.3s ease;
+}
+
+/* Remove border from last item */
+details:last-child {
+    border-bottom: none;
+}
+
+summary {
+    padding: 25px 10px; /* Spacious click area */
+    cursor: pointer;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: #fff;
+    
+    /* Flexbox Alignment */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    transition: color 0.3s;
+}
+
+summary::-webkit-details-marker { display: none; }
+
+/* Simple Plus Icon */
+summary::after {
+    content: '+';
+    font-size: 1.5rem;
+    color: #666; /* Grey by default */
+    font-weight: 300;
+    transition: 0.3s;
+}
+
+/* Hover Effect */
+details:hover summary {
+    color: var(--primary); /* Text turns red on hover */
+}
+details:hover summary::after {
+    color: white;
+}
+
+/* Active/Open State */
+details[open] summary {
+    color: var(--primary);
+    padding-bottom: 15px; /* Adjust spacing when open */
+}
+
+details[open] summary::after {
+    content: '-'; /* Changes to Minus */
+    color: var(--primary);
+    font-size: 2rem; /* Make minus slightly larger */
+    line-height: 0.5; /* Fix alignment */
+}
+
+/* Answer Text */
+.faq-answer {
+    padding: 0 10px 30px 10px; /* Clean spacing, no box */
+    color: #b3b3b3;
+    line-height: 1.7;
+    font-size: 1rem;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 /* --- 9. FAQ REDESIGN (Minimalist & Clean) --- */
         .faq-container {
