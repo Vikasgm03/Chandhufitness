@@ -112,16 +112,17 @@
                     </tr>
                 </thead>
                 <tbody id="table-body">
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </div>
 
     <script>
         // --- CONFIGURATION ---
+        // Replace with your Google Script URL
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynxK5255t3pAmsCHsQegf1L_pS4bTICU9PeJPUvobGxty1Ld1jYO103b6woWGd7yVFpQ/exec'; 
         
-        // ENCRYPTION
+        // PIN: 1234 (You can change the logic if needed)
         const PIN_HASH = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4";
 
         // 1. SECURE LOGIN LOGIC
@@ -130,10 +131,7 @@
             const msg = document.getElementById('error-msg');
             
             try {
-               
                 const hash = await sha256(input);
-
-                // Compare
                 if(hash === PIN_HASH) {
                     document.getElementById('login-screen').style.display = 'none';
                     document.getElementById('dashboard').style.display = 'block';
@@ -141,32 +139,30 @@
                 } else {
                     msg.style.display = 'block';
                     msg.innerText = "Incorrect PIN";
-                    document.getElementById('pin-input').value = ""; // Clear input
+                    document.getElementById('pin-input').value = ""; 
                 }
             } catch (error) {
                 console.error("Hashing failed:", error);
-                alert("Security Error: This browser does not support secure hashing. Try Chrome or Edge.");
+                alert("Security Error: Try Chrome or Edge.");
             }
         }
 
-        // Helper:
         async function sha256(message) {
             const msgBuffer = new TextEncoder().encode(message);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
             const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            return hashHex;
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
-        // 2. FETCH DATA FROM SHEETS
+        // 2. FETCH DATA
         function fetchData() {
             fetch(SCRIPT_URL)
                 .then(response => response.json())
                 .then(data => {
-                    renderTable(data);
-                    calculateStats(data);
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('dataTable').style.display = 'table';
+                    if (data.result === 'error') {
+                        throw new Error(data.error);
+                    }
+                    processData(data.data);
                 })
                 .catch(error => {
                     document.getElementById('loader').innerHTML = "Error loading data. Check script URL.";
@@ -174,16 +170,53 @@
                 });
         }
 
-        // 3. RENDER TABLE (With 7-Day Logic)
+        // 3. PROCESS DATA (SMART DEDUPLICATION)
+        function processData(allRows) {
+            // Remove Header
+            const rows = allRows.slice(1);
+            
+            // A. Calculate Total Revenue (Includes History)
+            let totalRevenue = 0;
+            rows.forEach(r => {
+                totalRevenue += parseInt(r[4]) || 0; 
+            });
+
+            // B. Filter Unique Members (Latest Entry Only)
+            let memberMap = {};
+            rows.forEach(r => {
+                const phone = r[2]; // Phone Number as Key
+                const joinDate = new Date(r[0]); // Join Date
+                
+                // If phone not found OR this row is newer -> Update Map
+                if (!memberMap[phone] || joinDate > new Date(memberMap[phone][0])) {
+                    memberMap[phone] = r;
+                }
+            });
+
+            // Convert Map back to Array of Unique Members
+            const uniqueMembers = Object.values(memberMap);
+
+            // C. Sort: Expiring Soonest First
+            uniqueMembers.sort((a, b) => parseInt(a[7]) - parseInt(b[7]));
+
+            // D. Render & Update Stats
+            renderTable(uniqueMembers);
+            updateStats(uniqueMembers, totalRevenue);
+            
+            // Show Table
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('dataTable').style.display = 'table';
+        }
+
+        // 4. RENDER TABLE
         function renderTable(data) {
             const tbody = document.getElementById('table-body');
             tbody.innerHTML = ''; 
 
-            for (let i = 1; i < data.length; i++) {
-                const row = data[i];
-                if(!row[0]) continue; // Skip empty rows
+            data.forEach(row => {
+                if(!row[0]) return; 
 
-                const joinDate = row[0];
+                const joinDate = new Date(row[0]).toLocaleDateString();
                 const name = row[1];
                 const phone = row[2];
                 const plan = row[3];
@@ -193,12 +226,11 @@
                 let statusClass = "status-active";
                 let rowColor = "";
                 
-                // Color Logic based on Days Left
                 if (daysLeft < 0) {
                     statusClass = "status-expired";
-                    rowColor = "background: rgba(255, 59, 59, 0.1);"; // Red for expired
+                    rowColor = "background: rgba(255, 59, 59, 0.1);"; // Red
                 } else if (daysLeft <= 7) {
-                    rowColor = "background: rgba(255, 183, 0, 0.1);"; // Yellow for 7 days or less
+                    rowColor = "background: rgba(255, 183, 0, 0.1);"; // Yellow
                 }
 
                 const tr = `
@@ -217,54 +249,41 @@
                     </tr>
                 `;
                 tbody.innerHTML += tr;
-            }
+            });
         }
 
-        // 4. CALCULATE STATS (Active vs Expired & 7-Day logic)
-        function calculateStats(data) {
-            let totalRevenue = 0;
-            let activeMembers = 0;
-            let expiredMembers = 0;
+        // 5. UPDATE STATS CARDS
+        function updateStats(uniqueData, revenue) {
+            let active = 0;
+            let expired = 0;
             let expiringSoon = 0;
 
-            for (let i = 1; i < data.length; i++) {
-                if(!data[i][0]) continue; // Skip empty rows
-
-                let days = parseInt(data[i][7]); // Column H (Days Left)
-                
-                // Add up revenue (Column E)
-                totalRevenue += parseInt(data[i][4]) || 0; 
-
-                // Categorize the member
+            uniqueData.forEach(row => {
+                const days = parseInt(row[7]);
                 if (days < 0) {
-                    expiredMembers++;
+                    expired++;
                 } else {
-                    activeMembers++; // Anyone with 0 or more days is active
-                    
-                    // If they are active AND have 7 or fewer days left
-                    if (days <= 7) {
-                        expiringSoon++;
-                    }
+                    active++;
+                    if (days <= 7) expiringSoon++;
                 }
-            }
+            });
 
-            // Update the HTML
-            document.getElementById('total-revenue').innerText = totalRevenue.toLocaleString();
-            document.getElementById('active-members').innerText = activeMembers;
+            document.getElementById('total-revenue').innerText = revenue.toLocaleString();
+            document.getElementById('active-members').innerText = active;
             document.getElementById('expiring-count').innerText = expiringSoon;
-            document.getElementById('expired-members').innerText = expiredMembers;
+            document.getElementById('expired-members').innerText = expired;
         }
 
-        // 5. SEARCH FUNCTION
+        // 6. SEARCH FUNCTION
         function filterTable() {
             const input = document.getElementById('searchInput').value.toLowerCase();
             const rows = document.getElementById('table-body').getElementsByTagName('tr');
 
             for (let i = 0; i < rows.length; i++) {
-                const nameText = rows[i].getElementsByTagName('td')[1].innerText.toLowerCase();
-                const phoneText = rows[i].getElementsByTagName('td')[2].innerText;
+                const name = rows[i].getElementsByTagName('td')[1].innerText.toLowerCase();
+                const phone = rows[i].getElementsByTagName('td')[2].innerText;
                 
-                if (nameText.includes(input) || phoneText.includes(input)) {
+                if (name.includes(input) || phone.includes(input)) {
                     rows[i].style.display = "";
                 } else {
                     rows[i].style.display = "none";
