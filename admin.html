@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Chandhu Fitness Admin</title>
+  
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   
@@ -78,7 +79,7 @@
     .stat-label { font-size: 0.7rem; color: #888; text-transform: uppercase; }
 
     /* ── TABLE / CARD LIST ── */
-    .content-wrapper { flex: 1; padding: 0 20px 40px; }
+    .content-wrapper { flex: 1; padding: 0 20px 80px; } /* Added padding bottom for mobile nav */
     
     table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
     
@@ -204,7 +205,7 @@ const CONFIG = {
 };
 
 let DB = [];
-let currentList = []; // Keeps track of currently filtered list for searching
+let currentList = [];
 
 const Auth = {
     async login() {
@@ -230,17 +231,34 @@ const App = {
       .then(r => r.json())
       .then(data => {
         const rows = data.data.slice(1);
-        DB = rows.filter(r => r[0] && r[1]).map(r => ({
+        
+        // 1. Convert to Objects
+        let allRows = rows.filter(r => r[0] && r[1]).map(r => ({
           date: r[0],
           name: r[1],
-          phone: r[2] ? String(r[2]) : "", // FIXED: Convert to String safely
+          phone: r[2] ? String(r[2]) : "", // Fixed: Convert phone to String for search
           plan: r[3],
           amount: parseInt(r[4]) || 0,
           days: parseInt(r[7]) || 0
         }));
-        DB.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+        // 2. Sort by Latest Date First
+        allRows.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+        // 3. SMART DEDUPLICATION (Keep newest only)
+        const uniqueMap = new Map();
+        DB = [];
         
-        currentList = DB; // Init current list
+        allRows.forEach(item => {
+            if(!item.phone) {
+                DB.push(item); 
+            } else if(!uniqueMap.has(item.phone)) {
+                uniqueMap.set(item.phone, true);
+                DB.push(item);
+            }
+        });
+
+        currentList = DB;
         this.updateStats();
         this.render(DB);
 
@@ -253,35 +271,31 @@ const App = {
   },
 
   updateStats() {
+    // Total Revenue is calculated from the UNIQUE list in this view.
+    // (If you want total revenue from ALL history, we would need to sum 'allRows' before deduping)
     document.getElementById("stat-revenue").innerText = DB.reduce((s, i) => s + i.amount, 0).toLocaleString();
     document.getElementById("stat-total").innerText = DB.length;
     document.getElementById("stat-soon").innerText = DB.filter(i => i.days >= 0 && i.days <= 7).length;
   },
 
   filter(type, btn) {
-    // 1. Update UI Buttons
     document.querySelectorAll('.filter-chip').forEach(el => el.classList.remove('active'));
     btn.classList.add('active');
     
-    // 2. Filter Data
     if(type === 'active') currentList = DB.filter(i => i.days >= 0);
     else if(type === 'soon') currentList = DB.filter(i => i.days >= 0 && i.days <= 7);
     else if(type === 'expired') currentList = DB.filter(i => i.days < 0);
     else currentList = DB;
     
-    // 3. Clear search box when changing filter to avoid confusion
     document.getElementById("search").value = "";
-    
     this.render(currentList);
   },
 
   search() {
     const term = document.getElementById("search").value.toLowerCase().trim();
-    
-    // Search inside the currently filtered list (e.g. if you are in 'Expired', search only expired people)
     const filtered = currentList.filter(i =>
-      (i.name && i.name.toLowerCase().includes(term)) ||
-      (i.phone && i.phone.toString().includes(term)) // FIXED: toString() added for safety
+      i.name.toLowerCase().includes(term) ||
+      i.phone.includes(term)
     );
     this.render(filtered);
   },
