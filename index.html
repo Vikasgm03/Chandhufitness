@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chandhu-Fitness | Elite Training Facility</title>
+    <title>Chandu-Fitness | Elite Training Facility</title>
     
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
@@ -305,122 +305,159 @@
         .features li i { color: var(--primary); margin-right: 10px; }
 
 /* --- 8. ENGAGING FOOTER --- */
-        footer {
-            background: #050505;
-            padding: 80px 5% 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            overflow: hidden;
-        }
+footer {
+    background: #050505;
+    padding: 80px 5% 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+}
 
-        /* Top Red Gradient Line */
-        footer::before {
-            content: '';
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-        }
+/* Top Red Gradient Line */
+footer::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
 
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 50px;
-            margin-bottom: 60px;
-        }
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 50px;
+    margin-bottom: 60px;
+}
 
-        .footer-col h3 {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-            color: white;
-            letter-spacing: 1px;
-        }
+/* --- NEW: COMPACT BRANDING STYLES --- */
+.brand-col {
+    max-width: 300px; /* Limits width for a cleaner look */
+}
 
-        .footer-bio {
-            color: #888;
-            line-height: 1.8;
-            margin: 20px 0;
-            font-size: 0.95rem;
-        }
+.footer-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.4rem; /* Reduced from Header size */
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+.footer-logo span { color: var(--primary); }
 
-        /* Quick Links Hover Effect */
-        .footer-links li { margin-bottom: 15px; }
-        .footer-links a {
-            color: #bbb;
-            font-size: 0.95rem;
-            transition: 0.3s;
-            display: inline-block;
-        }
-        .footer-links a:hover {
-            color: var(--primary);
-            transform: translateX(5px); /* Slide right on hover */
-        }
+.footer-bio {
+    color: #888;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+    font-weight: 300;
+}
 
-        /* Social Icons */
-        .social-icons { display: flex; gap: 15px; margin-top: 20px; }
-        .social-icons a {
-            width: 40px; height: 40px;
-            background: rgba(255,255,255,0.05);
-            display: flex; justify-content: center; align-items: center;
-            border-radius: 50%;
-            color: white;
-            transition: 0.3s;
-            border: 1px solid transparent;
-        }
-        .social-icons a:hover {
-            background: var(--primary);
-            box-shadow: 0 0 15px var(--primary-glow);
-            transform: translateY(-3px);
-        }
+/* --- NEW: GLASS SOCIAL BUTTONS --- */
+.social-group {
+    display: flex;
+    gap: 12px;
+}
 
-        /* Contact Info */
-        .contact-row {
-            display: flex; align-items: center; gap: 15px;
-            margin-bottom: 20px; color: #bbb; font-size: 0.95rem;
-        }
-        .contact-row i { color: var(--primary); font-size: 1.1rem; }
+.social-btn {
+    width: 35px;
+    height: 35px;
+    background: rgba(255,255,255,0.05); /* Glass Background */
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: center; align-items: center;
+    border-radius: 50%;
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s all ease;
+}
 
-        /* --- BOTTOM BAR & DEV BUTTON --- */
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+.social-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 59, 59, 0.3);
+}
 
-        .copyright { color: #555; font-size: 0.85rem; }
+/* --- STANDARD LINKS & CONTACT --- */
+.footer-col h3 {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    color: white;
+    letter-spacing: 1px;
+}
 
-        /* Premium Developer Button */
-        .dev-btn {
-            display: flex; align-items: center; gap: 10px;
-            padding: 8px 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            color: #aaa;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.4s;
-        }
-        .dev-btn i { color: #0077b5; font-size: 1.1rem; } /* LinkedIn Blue */
-        
-        .dev-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #0077b5;
-            color: white;
-            box-shadow: 0 0 20px rgba(0, 119, 181, 0.3);
-        }
+.footer-links li { margin-bottom: 12px; }
+.footer-links a {
+    color: #bbb;
+    font-size: 0.95rem;
+    transition: 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+.footer-links a:hover {
+    color: var(--primary);
+    transform: translateX(5px);
+}
 
-        /* Mobile Footer Adjustments */
-        @media (max-width: 768px) {
-            .footer-bottom { justify-content: center; text-align: center; }
-            .footer-col { text-align: center; }
-            .social-icons { justify-content: center; }
-            .contact-row { justify-content: center; }
-        }
+.contact-row {
+    display: flex; align-items: center; gap: 15px;
+    margin-bottom: 20px; color: #bbb; font-size: 0.95rem;
+}
+.contact-row i { color: var(--primary); font-size: 1.1rem; }
+
+/* --- BOTTOM BAR & DEV LINK --- */
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.copyright { color: #555; font-size: 0.85rem; }
+
+/* Wrapper to center dev link */
+.dev-credit-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* Using the Reduced Size Glow Link from previous step */
+.dev-glow-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 18px; 
+    font-size: 0.75rem; 
+    text-decoration: none;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--primary);
+    border-radius: 30px;
+    background: transparent;
+    box-shadow: 0 0 8px rgba(255, 59, 59, 0.2);
+    transition: all 0.3s ease;
+}
+.dev-glow-link i { font-size: 0.9rem; color: var(--primary); }
+.dev-glow-link:hover {
+    background: rgba(255, 59, 59, 0.1);
+    border-color: transparent;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--primary), inset 0 0 10px var(--primary);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .footer-bottom { justify-content: center; text-align: center; }
+    .footer-col { text-align: center; }
+    .social-group { justify-content: center; }
+    .contact-row { justify-content: center; }
+    .brand-col { max-width: 100%; } /* Full width on mobile */
+}
 /* --- 9. FAQ REDESIGN (Minimalist & Clean) --- */
         .faq-container {
             max-width: 800px;
@@ -570,7 +607,7 @@
 <body>
 
 <header>
-    <div class="logo">CHANDHU<span>FITNESS</span></div>
+    <div class="logo">CHANDU <span>FITNESS</span></div>
     <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
     <nav>
         <ul id="nav-list"> 
@@ -671,7 +708,7 @@
     <div class="grid-container">
         <div class="glass-card trainer-card" data-aos="flip-left">
             <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=300" class="trainer-img">
-            <h3>CHANDHAN</h3><p style="color:var(--primary); font-size:0.9rem; margin-top:5px">HEAD COACH</p>
+            <h3>CHANDAN</h3><p style="color:var(--primary); font-size:0.9rem; margin-top:5px">HEAD COACH</p>
         </div>
         <div class="glass-card trainer-card" data-aos="flip-left" data-aos-delay="200">
             <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=300" class="trainer-img">
@@ -723,18 +760,19 @@
 <footer>
     <div class="footer-content">
         
-        <div class="footer-col">
-            <div class="logo">CHANDHU<span>FITNESS</span></div>
-            <p class="footer-bio">
-                We are more than just a gym. We are a sanctuary for those who refuse to be average. 
-                Forging elite bodies and minds since 2018. Join the revolution.
-            </p>
-            <div class="social-icons">
-                <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet"><i class="fab fa-youtube"></i></a>
-                <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet"><i class="fab fa-facebook-f"></i></a>
-            </div>
-        </div>
+<div class="footer-col brand-col">
+    <div class="footer-logo">CHANDHU<span>FITNESS</span></div>
+    
+    <p class="footer-bio">
+        More than just a gym. Forging elite bodies and minds since 2018.
+    </p>
+
+    <div class="social-group">
+        <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet" class="social-btn"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet" class="social-btn"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+    </div>
+</div>
 
         <div class="footer-col">
             <h3>QUICK LINKS</h3>
