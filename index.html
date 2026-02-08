@@ -305,122 +305,304 @@
         .features li i { color: var(--primary); margin-right: 10px; }
 
 /* --- 8. ENGAGING FOOTER --- */
-        footer {
-            background: #050505;
-            padding: 80px 5% 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            overflow: hidden;
-        }
+footer {
+    background: #050505;
+    padding: 80px 5% 0; /* No bottom padding, handled by footer-bottom */
+    border-top: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+}
 
-        /* Top Red Gradient Line */
-        footer::before {
-            content: '';
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-        }
+/* Top Red Gradient Line */
+footer::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
 
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 50px;
-            margin-bottom: 60px;
-        }
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 60px; /* Better gap between columns */
+    margin-bottom: 50px;
+}
 
-        .footer-col h3 {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-            color: white;
-            letter-spacing: 1px;
-        }
+/* --- LOGO (Reduced Size) --- */
+.footer-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem; /* SMALLER SIZE */
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+.footer-logo span { color: var(--primary); }
 
-        .footer-bio {
-            color: #888;
-            line-height: 1.8;
-            margin: 20px 0;
-            font-size: 0.95rem;
-        }
+.footer-col h3 {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    color: white;
+    letter-spacing: 1px;
+}
 
-        /* Quick Links Hover Effect */
-        .footer-links li { margin-bottom: 15px; }
-        .footer-links a {
-            color: #bbb;
-            font-size: 0.95rem;
-            transition: 0.3s;
-            display: inline-block;
-        }
-        .footer-links a:hover {
-            color: var(--primary);
-            transform: translateX(5px); /* Slide right on hover */
-        }
+.footer-bio {
+    color: #888;
+    line-height: 1.8;
+    margin: 20px 0;
+    font-size: 0.95rem;
+    max-width: 320px;
+}
 
-        /* Social Icons */
-        .social-icons { display: flex; gap: 15px; margin-top: 20px; }
-        .social-icons a {
-            width: 40px; height: 40px;
-            background: rgba(255,255,255,0.05);
-            display: flex; justify-content: center; align-items: center;
-            border-radius: 50%;
-            color: white;
-            transition: 0.3s;
-            border: 1px solid transparent;
-        }
-        .social-icons a:hover {
-            background: var(--primary);
-            box-shadow: 0 0 15px var(--primary-glow);
-            transform: translateY(-3px);
-        }
+/* Links */
+.footer-links li { margin-bottom: 12px; }
+.footer-links a {
+    color: #bbb;
+    font-size: 0.95rem;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+}
+.footer-links a:hover {
+    color: var(--primary);
+    transform: translateX(5px);
+}
 
-        /* Contact Info */
-        .contact-row {
-            display: flex; align-items: center; gap: 15px;
-            margin-bottom: 20px; color: #bbb; font-size: 0.95rem;
-        }
-        .contact-row i { color: var(--primary); font-size: 1.1rem; }
+/* --- SOCIAL ICONS (Fixed Spacing) --- */
+.social-icons { 
+    display: flex; 
+    gap: 20px; /* INCREASED GAP */
+    margin-top: 25px; 
+}
+.social-icons a {
+    width: 42px; height: 42px;
+    background: rgba(255,255,255,0.05);
+    display: flex; justify-content: center; align-items: center;
+    border-radius: 50%;
+    color: white;
+    transition: 0.3s;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.social-icons a:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+    transform: translateY(-3px);
+}
 
-        /* --- BOTTOM BAR & DEV BUTTON --- */
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+/* Contact Info */
+.contact-row {
+    display: flex; align-items: center; gap: 15px;
+    margin-bottom: 20px; color: #bbb; font-size: 0.95rem;
+}
+.contact-row i { color: var(--primary); font-size: 1.1rem; }
 
-        .copyright { color: #555; font-size: 0.85rem; }
 
-        /* Premium Developer Button */
-        .dev-btn {
-            display: flex; align-items: center; gap: 10px;
-            padding: 8px 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            color: #aaa;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.4s;
-        }
-        .dev-btn i { color: #0077b5; font-size: 1.1rem; } /* LinkedIn Blue */
-        
-        .dev-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #0077b5;
-            color: white;
-            box-shadow: 0 0 20px rgba(0, 119, 181, 0.3);
-        }
+/* --- BOTTOM BAR (Visible Line) --- */
+.footer-bottom {
+    /* Brighter line visibility */
+    border-top: 1px solid rgba(255,255,255,0.15); 
+    padding: 25px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 
-        /* Mobile Footer Adjustments */
-        @media (max-width: 768px) {
-            .footer-bottom { justify-content: center; text-align: center; }
-            .footer-col { text-align: center; }
-            .social-icons { justify-content: center; }
-            .contact-row { justify-content: center; }
-        }
+.copyright { color: #666; font-size: 0.85rem; }
+
+/* --- COMPACT GLOWING DEV BUTTON --- */
+.dev-credit-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.dev-glow-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 18px; 
+    font-size: 0.75rem; 
+    text-decoration: none;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--primary);
+    border-radius: 30px;
+    background: transparent;
+    box-shadow: 0 0 8px rgba(255, 59, 59, 0.2);
+    transition: all 0.3s ease;
+}
+
+.dev-glow-link i { font-size: 0.9rem; color: var(--primary); }
+
+.dev-glow-link:hover {
+    background: rgba(255, 59, 59, 0.1);
+    border-color: transparent;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--primary), inset 0 0 10px var(--primary);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .footer-bottom { justify-content: center; text-align: center; flex-direction: column-reverse; }
+    .footer-col { text-align: center; }
+    .social-icons { justify-content: center; }
+    .contact-row { justify-content: center; }
+    .footer-bio { margin: 0 auto 20px auto; }
+}/* --- 8. ENGAGING FOOTER --- */
+footer {
+    background: #050505;
+    padding: 80px 5% 0; /* No bottom padding, handled by footer-bottom */
+    border-top: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Top Red Gradient Line */
+footer::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 60px; /* Better gap between columns */
+    margin-bottom: 50px;
+}
+
+/* --- LOGO (Reduced Size) --- */
+.footer-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem; /* SMALLER SIZE */
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+.footer-logo span { color: var(--primary); }
+
+.footer-col h3 {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.footer-bio {
+    color: #888;
+    line-height: 1.8;
+    margin: 20px 0;
+    font-size: 0.95rem;
+    max-width: 320px;
+}
+
+/* Links */
+.footer-links li { margin-bottom: 12px; }
+.footer-links a {
+    color: #bbb;
+    font-size: 0.95rem;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+}
+.footer-links a:hover {
+    color: var(--primary);
+    transform: translateX(5px);
+}
+
+/* --- SOCIAL ICONS (Fixed Spacing) --- */
+.social-icons { 
+    display: flex; 
+    gap: 20px; /* INCREASED GAP */
+    margin-top: 25px; 
+}
+.social-icons a {
+    width: 42px; height: 42px;
+    background: rgba(255,255,255,0.05);
+    display: flex; justify-content: center; align-items: center;
+    border-radius: 50%;
+    color: white;
+    transition: 0.3s;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.social-icons a:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+    transform: translateY(-3px);
+}
+
+/* Contact Info */
+.contact-row {
+    display: flex; align-items: center; gap: 15px;
+    margin-bottom: 20px; color: #bbb; font-size: 0.95rem;
+}
+.contact-row i { color: var(--primary); font-size: 1.1rem; }
+
+
+/* --- BOTTOM BAR (Visible Line) --- */
+.footer-bottom {
+    /* Brighter line visibility */
+    border-top: 1px solid rgba(255,255,255,0.15); 
+    padding: 25px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.copyright { color: #666; font-size: 0.85rem; }
+
+/* --- COMPACT GLOWING DEV BUTTON --- */
+.dev-credit-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.dev-glow-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 18px; 
+    font-size: 0.75rem; 
+    text-decoration: none;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--primary);
+    border-radius: 30px;
+    background: transparent;
+    box-shadow: 0 0 8px rgba(255, 59, 59, 0.2);
+    transition: all 0.3s ease;
+}
+
+.dev-glow-link i { font-size: 0.9rem; color: var(--primary); }
+
+.dev-glow-link:hover {
+    background: rgba(255, 59, 59, 0.1);
+    border-color: transparent;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--primary), inset 0 0 10px var(--primary);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .footer-bottom { justify-content: center; text-align: center; flex-direction: column-reverse; }
+    .footer-col { text-align: center; }
+    .social-icons { justify-content: center; }
+    .contact-row { justify-content: center; }
+    .footer-bio { margin: 0 auto 20px auto; }
+}
 
 /* --- 9. FAQ REDESIGN (Minimalist & Clean) --- */
 .faq-container {
@@ -805,66 +987,62 @@ details[open] summary::after {
 <footer>
     <div class="footer-content">
         
-<div class="footer-col brand-col">
-    <div class="footer-logo">CHANDHU<span>FITNESS</span></div>
-    
-    <p class="footer-bio">
-        More than just a gym. Forging elite bodies and minds since 2018.
-    </p>
-
-    <div class="social-group">
-        <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet" class="social-btn"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet" class="social-btn"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-    </div>
-</div>
+        <div class="footer-col">
+            <div class="footer-logo">CHANDHU <span>FITNESS</span></div>
+            <p class="footer-bio">
+                We are more than just a gym. We are a sanctuary for those who refuse to be average. 
+                Forging elite bodies and minds since 2018. Join the revolution.
+            </p>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/gowdru._huduga_chandu/?utm_source=ig_web_button_share_sheet"><i class="fab fa-facebook-f"></i></a>
+            </div>
+        </div>
 
         <div class="footer-col">
             <h3>QUICK LINKS</h3>
-            <ul class="footer-links">
+            <ul class="footer-links" style="list-style:none;">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#services">Our Expertise</a></li>
-                <li><a href="#schedule">Training Schedule</a></li>
+                <li><a href="#about">About Us</a></li>
                 <li><a href="#plans">Membership Plans</a></li>
-                <li><a href='/join'>Register Now</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
 
         <div class="footer-col">
-            <h3>GET IN TOUCH</h3>
+            <h3>CONTACT US</h3>
             <div class="contact-row">
                 <i class="fas fa-map-marker-alt"></i>
-                <span>VF6J+4F3, ShravanaBelagola, Rachenahalli Road, Karnataka 573135</span>
+                <span>123 Fitness Street, Gym City</span>
             </div>
             <div class="contact-row">
                 <i class="fas fa-phone-alt"></i>
-                <span>+91 9535690976 </span>
+                <span>+91 95356 90976</span>
             </div>
             <div class="contact-row">
                 <i class="fas fa-envelope"></i>
-                <span>chandhufitness@gmail.com</span>
-            </div>
-            <div class="contact-row">
-                <i class="fas fa-clock"></i>
-                <span>Mon - Sat: 5:00 AM - 10:00 PM</span>
+                <span>contact@chandhufitness.com</span>
             </div>
         </div>
 
     </div>
 
+    <div class="footer-bottom">
+        <p class="copyright">
+            <a href="admin.html" style="text-decoration:none; color:inherit; cursor:default;">
+                © 2026 Chandhu Fitness. All Rights Reserved.
+            </a>
+        </p>
 
-<p class="copyright">
-    <a href="admin.html" style="text-decoration:none; color:inherit; cursor:default;">
-        © 2026 Chandhu Fitness. All Rights Reserved.
-    </a>
-</p>
-        
-      <div class="dev-credit-wrapper">
-    <a href="https://www.linkedin.com/in/vikas-gm-viewprofile/" target="_blank" class="dev-glow-link">
-        <i class="fab fa-linkedin-in"></i>
-        <span class="dev-text">Developed by <span class="dev-name">VIKAS G M</span></span>
-    </a>
-</div>
+        <div class="dev-credit-wrapper">
+            <a href="https://www.linkedin.com/in/vikas-gm-viewprofile/" target="_blank" class="dev-glow-link">
+                <i class="fab fa-linkedin-in"></i>
+                <span>Developed by <strong style="color:#fff;">VIKAS G M</strong></span>
+            </a>
+        </div>
+    </div>
+</footer>
 
 <style>
     /* Wrapper to center align */
