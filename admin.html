@@ -9,37 +9,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   
   <style>
-    :root {
-      --primary: #ff3b3b;
-      --bg: #050505;
-      --card: #121212;
-      --border: #222;
-      --text: #eee;
-    }
+    :root { --primary: #ff3b3b; --bg: #050505; --card: #121212; --border: #222; --text: #eee; }
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* ── LOGIN ── */
+    /* LOGIN */
     #login-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     .login-box { background: var(--card); padding: 40px; border-radius: 20px; border: 1px solid var(--border); text-align: center; width: 85%; max-width: 320px; }
     .pin-input { width: 100%; padding: 15px; margin: 25px 0; background: #000; border: 1px solid #333; color: #fff; text-align: center; font-size: 1.5rem; letter-spacing: 8px; border-radius: 12px; }
     .btn-main { width: 100%; padding: 15px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-weight: bold; font-family: 'Oswald', sans-serif; font-size: 1.1rem; }
 
-    /* ── HEADER ── */
+    /* HEADER */
     .header { position: sticky; top: 0; z-index: 100; background: rgba(5,5,5,0.95); padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 15px; }
     .search-bar { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid #333; background: #111; color: white; font-size: 1rem; outline: none; }
     
-    /* TABS (Dashboard vs History) */
     .tabs { display: flex; gap: 10px; background: #111; padding: 5px; border-radius: 12px; border: 1px solid #333; }
     .tab { flex: 1; text-align: center; padding: 10px; font-size: 0.9rem; font-weight: 600; color: #666; cursor: pointer; border-radius: 8px; transition: 0.2s; }
     .tab.active { background: #222; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
 
-    /* FILTERS (Active/Expired) */
     .filters { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
     .filter-chip { padding: 6px 14px; background: #1a1a1a; border: 1px solid #333; border-radius: 20px; color: #888; font-size: 0.8rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: 0.2s; }
     .filter-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    /* ── CONTENT ── */
+    /* CONTENT */
     .content-wrapper { flex: 1; padding: 20px 20px 80px; }
     
     /* Stats */
@@ -56,37 +48,42 @@
     tbody tr td:first-child { border-left: 1px solid var(--border); border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
     tbody tr td:last-child { border-right: 1px solid var(--border); border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
 
-    /* Delete Button */
-    .btn-delete { color: #555; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; width: 40px; height: 40px; font-size: 1rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
-    .btn-delete:hover { color: #ff3b3b; border-color: #ff3b3b; background: rgba(255, 59, 59, 0.1); }
+    /* Buttons */
+    .btn-icon { color: #555; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; width: 35px; height: 35px; font-size: 0.9rem; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; margin-left: 5px; }
+    .btn-delete:hover { color: #ff3b3b; border-color: #ff3b3b; }
+    .btn-edit:hover { color: #00bcd4; border-color: #00bcd4; }
 
-    /* Whatsapp Button */
-    .btn-wa { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; background: #1a1a1a; border-radius: 50%; color: #25d366; font-size: 1.5rem; border: 1px solid #333; transition: 0.2s; }
-    .btn-wa:active { transform: scale(0.9); }
+    /* EDIT MODAL */
+    #edit-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 99999; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+    .edit-box { background: #151515; width: 90%; max-width: 400px; padding: 25px; border-radius: 16px; border: 1px solid #333; }
+    .edit-box h3 { font-family: 'Oswald', sans-serif; color: white; margin-bottom: 20px; text-align: center; }
+    .edit-field { width: 100%; background: #0a0a0a; border: 1px solid #333; color: white; padding: 12px; border-radius: 8px; margin-bottom: 12px; outline: none; }
+    .edit-actions { display: flex; gap: 10px; margin-top: 10px; }
+    .btn-cancel { flex: 1; padding: 12px; background: #222; color: #fff; border: none; border-radius: 8px; font-weight: bold; }
+    .btn-save { flex: 1; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-weight: bold; }
 
-    /* ── MOBILE OPTIMIZATION ── */
+    /* MOBILE */
     @media (max-width: 768px) {
       .stats { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 5px; }
       .stat-card { min-width: 140px; scroll-snap-align: start; }
-      
       thead { display: none; }
       tr { display: block; margin-bottom: 15px; border-radius: 16px; position: relative; border: 1px solid var(--border); padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
       td { display: block; padding: 0; border: none !important; }
       
-      /* Dashboard Card Layout */
-      .dash-view td:nth-child(2) { font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 5px; } /* Name */
+      /* Dashboard */
+      .dash-view td:nth-child(2) { font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 5px; }
       .dash-view td:nth-child(3), .dash-view td:nth-child(4) { display: inline-block; margin-right: 10px; font-size: 0.9rem; }
-      .dash-view td:nth-child(4) { color: var(--primary); font-weight: 600; } /* Plan */
-      .dash-view td:nth-child(5) { margin-top: 10px; } /* Badge */
-      .dash-view td:nth-child(1) { position: absolute; top: 18px; right: 70px; font-size: 0.75rem; color: #555; } /* Date */
-      .dash-view td:nth-child(6) { position: absolute; top: 15px; right: 15px; } /* WhatsApp */
+      .dash-view td:nth-child(4) { color: var(--primary); font-weight: 600; }
+      .dash-view td:nth-child(5) { margin-top: 10px; }
+      .dash-view td:nth-child(1) { position: absolute; top: 18px; right: 70px; font-size: 0.75rem; color: #555; }
+      .dash-view td:nth-child(6) { position: absolute; top: 15px; right: 15px; } 
 
-      /* History Card Layout */
-      .hist-view td:nth-child(2) { font-size: 1.1rem; font-weight: 700; color: white; } /* Name */
-      .hist-view td:nth-child(4) { color: #888; font-size: 0.9rem; margin-top: 2px; } /* Plan */
-      .hist-view td:nth-child(1) { color: #555; font-size: 0.8rem; margin-bottom: 5px; } /* Date */
-      .hist-view td:nth-child(5) { display: none; } /* Hide Amount on mobile to save space */
-      .hist-view td:nth-child(6) { position: absolute; top: 20px; right: 15px; } /* Delete */
+      /* History */
+      .hist-view td:nth-child(2) { font-size: 1.1rem; font-weight: 700; color: white; }
+      .hist-view td:nth-child(4) { color: #888; font-size: 0.9rem; margin-top: 2px; }
+      .hist-view td:nth-child(1) { color: #555; font-size: 0.8rem; margin-bottom: 5px; }
+      .hist-view td:nth-child(5) { display: none; }
+      .hist-view td:nth-child(6) { position: absolute; top: 15px; right: 10px; display: flex; }
     }
 
     .badge { padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; display: inline-block; }
@@ -106,15 +103,36 @@
     </div>
   </div>
 
+  <div id="edit-modal">
+    <div class="edit-box">
+        <h3>EDIT MEMBER</h3>
+        <input type="hidden" id="edit-row">
+        <label style="color:#888; font-size:0.8rem;">Name</label>
+        <input type="text" id="edit-name" class="edit-field">
+        <label style="color:#888; font-size:0.8rem;">Phone</label>
+        <input type="number" id="edit-phone" class="edit-field">
+        <label style="color:#888; font-size:0.8rem;">Plan</label>
+        <select id="edit-plan" class="edit-field">
+            <option value="1 MONTH">1 MONTH</option>
+            <option value="PLATINUM">PLATINUM</option>
+        </select>
+        <label style="color:#888; font-size:0.8rem;">Amount</label>
+        <input type="number" id="edit-amount" class="edit-field">
+        
+        <div class="edit-actions">
+            <button class="btn-cancel" onclick="document.getElementById('edit-modal').style.display='none'">Cancel</button>
+            <button class="btn-save" onclick="App.saveEdit()">Save Changes</button>
+        </div>
+    </div>
+  </div>
+
   <div class="main">
     <header class="header">
       <input id="search" class="search-bar" placeholder="🔍 Search name..." oninput="App.search()"/>
-      
       <div class="tabs">
         <div class="tab active" onclick="App.setMode('dashboard', this)">Dashboard</div>
         <div class="tab" onclick="App.setMode('history', this)">History & Edit</div>
       </div>
-
       <div id="filters-container" class="filters">
         <div class="filter-chip active" onclick="App.filter('all', this)">All</div>
         <div class="filter-chip" onclick="App.filter('active', this)">Active</div>
@@ -140,15 +158,14 @@
   </div>
 
 <script>
-// ──────────────── CONFIG ────────────────
 const CONFIG = {
     // PASTE YOUR URL HERE
     API_URL: "https://script.google.com/macros/s/AKfycbynxK5255t3pAmsCHsQegf1L_pS4bTICU9PeJPUvobGxty1Ld1jYO103b6woWGd7yVFpQ/exec",
     PIN_HASH: "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"
 };
 
-let RAW_DATA = []; // Full History
-let SMART_DATA = []; // Deduplicated for Dashboard
+let RAW_DATA = []; 
+let SMART_DATA = []; 
 let CURRENT_MODE = 'dashboard';
 let CURRENT_FILTER = 'all';
 
@@ -179,63 +196,42 @@ const App = {
       .then(r => r.json())
       .then(data => {
         const rows = data.data.slice(1);
-        
-        // 1. Process Raw Data (Remove Empty Rows)
         RAW_DATA = rows
             .map((r, i) => ({
-                date: r[0],
-                name: r[1],
-                phone: r[2] ? String(r[2]) : "",
-                plan: r[3],
-                amount: parseInt(r[4]) || 0,
-                days: parseInt(r[7]) || 0,
-                rowIndex: i + 2 
+                date: r[0], name: r[1], phone: r[2] ? String(r[2]) : "", 
+                plan: r[3], amount: parseInt(r[4]) || 0, days: parseInt(r[7]) || 0, rowIndex: i + 2 
             }))
-            .filter(item => item.name && item.date); // REMOVE EMPTY ENTRIES
+            .filter(item => item.name && item.date);
         
-        // 2. Sort Latest First
         RAW_DATA.sort((a,b) => new Date(b.date) - new Date(a.date));
 
-        // 3. Create Smart Data (Deduplicated)
         const uniqueMap = new Map();
         SMART_DATA = [];
         RAW_DATA.forEach(item => {
-            if(!item.phone) {
-                SMART_DATA.push(item);
-            } else if(!uniqueMap.has(item.phone)) {
-                uniqueMap.set(item.phone, true);
-                SMART_DATA.push(item);
-            }
+            if(!item.phone) { SMART_DATA.push(item); } 
+            else if(!uniqueMap.has(item.phone)) { uniqueMap.set(item.phone, true); SMART_DATA.push(item); }
         });
 
         this.updateStats();
         this.render();
-
         document.getElementById("loader").style.display = "none";
         document.getElementById("data-table").style.display = "table";
       });
   },
 
   updateStats() {
-    // Stats based on SMART DATA (Active Members)
     document.getElementById("stat-revenue").innerText = RAW_DATA.reduce((s, i) => s + i.amount, 0).toLocaleString();
     document.getElementById("stat-total").innerText = SMART_DATA.length;
     document.getElementById("stat-soon").innerText = SMART_DATA.filter(i => i.days >= 0 && i.days <= 7).length;
   },
 
   setMode(mode, btn) {
-    // Toggle Tabs
     document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
     btn.classList.add('active');
     CURRENT_MODE = mode;
-    
-    // Toggle Visibility
-    const isDash = (mode === 'dashboard');
-    document.getElementById('stats-container').style.display = isDash ? 'grid' : 'none';
-    document.getElementById('filters-container').style.display = isDash ? 'flex' : 'none'; // Hide filters in history mode
-    
-    // Reset Filter when switching
-    if(isDash) this.filter('all', document.querySelector('.filter-chip'));
+    document.getElementById('stats-container').style.display = (mode === 'dashboard') ? 'grid' : 'none';
+    document.getElementById('filters-container').style.display = (mode === 'dashboard') ? 'flex' : 'none';
+    if(mode === 'dashboard') this.filter('all', document.querySelector('.filter-chip'));
     else this.render();
   },
 
@@ -247,108 +243,94 @@ const App = {
     this.render();
   },
 
-  search() {
-    this.render();
+  search() { this.render(); },
+
+  // --- EDIT FUNCTIONS ---
+  openEdit(rowIndex, name, phone, plan, amount) {
+    document.getElementById('edit-row').value = rowIndex;
+    document.getElementById('edit-name').value = name;
+    document.getElementById('edit-phone').value = phone;
+    document.getElementById('edit-plan').value = plan;
+    document.getElementById('edit-amount').value = amount;
+    document.getElementById('edit-modal').style.display = 'flex';
   },
 
-  deleteRow(rowIndex, name) {
-    if(!confirm(`⚠️ Delete ${name}?\n\nThis cannot be undone.`)) return;
-
-    // Show deleting state
-    const btn = event.target.closest('button');
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
+  saveEdit() {
+    const btn = document.querySelector('.btn-save');
+    btn.innerHTML = 'Saving...';
+    
     const formData = new URLSearchParams();
-    formData.append('action', 'delete');
-    formData.append('row', rowIndex);
+    formData.append('action', 'edit');
+    formData.append('row', document.getElementById('edit-row').value);
+    formData.append('Name', document.getElementById('edit-name').value);
+    formData.append('Phone', document.getElementById('edit-phone').value);
+    formData.append('Plan', document.getElementById('edit-plan').value);
+    formData.append('Amount', document.getElementById('edit-amount').value);
 
     fetch(CONFIG.API_URL, { method: 'POST', body: formData })
       .then(r => r.json())
       .then(res => {
         if(res.result === 'success') {
-            alert("Deleted Successfully");
-            this.fetchData(); 
+            document.getElementById('edit-modal').style.display = 'none';
+            btn.innerHTML = 'Save Changes';
+            this.fetchData();
         } else {
-            alert("Error deleting row");
+            alert('Error updating row');
         }
       });
+  },
+
+  deleteRow(rowIndex, name) {
+    if(!confirm(`⚠️ Delete ${name}?`)) return;
+    const formData = new URLSearchParams();
+    formData.append('action', 'delete');
+    formData.append('row', rowIndex);
+    fetch(CONFIG.API_URL, { method: 'POST', body: formData }).then(r => { this.fetchData(); });
   },
 
   render() {
     const term = document.getElementById("search").value.toLowerCase().trim();
     const tbody = document.getElementById("table-body");
     const thead = document.getElementById("table-head");
-    
-    // Select Data Source
     let list = (CURRENT_MODE === 'dashboard') ? SMART_DATA : RAW_DATA;
     
-    // Apply Dashboard Filters
     if(CURRENT_MODE === 'dashboard') {
         if(CURRENT_FILTER === 'active') list = list.filter(i => i.days >= 0);
         else if(CURRENT_FILTER === 'soon') list = list.filter(i => i.days >= 0 && i.days <= 7);
         else if(CURRENT_FILTER === 'expired') list = list.filter(i => i.days < 0);
     }
     
-    // Apply Search
     if(term) {
-        list = list.filter(i => 
-            (i.name && i.name.toLowerCase().includes(term)) || 
-            (i.phone && i.phone.includes(term))
-        );
+        list = list.filter(i => (i.name && i.name.toLowerCase().includes(term)) || (i.phone && i.phone.includes(term)));
     }
 
-    if(list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px;">No records found</td></tr>`;
-        return;
-    }
+    if(list.length === 0) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px;">No records</td></tr>`; return; }
 
-    // Render Headers
     if(CURRENT_MODE === 'dashboard') {
         thead.innerHTML = `<tr><th>Date</th><th>Name</th><th>Phone</th><th>Plan</th><th>Status</th><th>Action</th></tr>`;
+        tbody.innerHTML = list.map(item => {
+            let badge = item.days < 0 ? "b-expired" : (item.days <= 7 ? "b-soon" : "b-active");
+            let status = item.days < 0 ? "Expired" : `${item.days} Days Left`;
+            let dateStr = "N/A"; try { dateStr = new Date(item.date).toLocaleDateString('en-IN', {day:'numeric', month:'short'}); } catch(e){}
+            return `<tr class="dash-view">
+                <td>${dateStr}</td><td>${item.name}</td><td>${item.phone||""}</td><td>${item.plan}</td>
+                <td><span class="badge ${badge}">${status}</span></td>
+                <td>${item.phone ? `<a href="https://wa.me/91${item.phone}?text=Hello ${item.name}, Status: ${status}" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i></a>` : ""}</td>
+            </tr>`;
+        }).join("");
     } else {
         thead.innerHTML = `<tr><th>Date</th><th>Name</th><th>Phone</th><th>Plan</th><th>Amount</th><th>Action</th></tr>`;
+        tbody.innerHTML = list.map(item => {
+            let dateStr = "N/A"; try { dateStr = new Date(item.date).toLocaleDateString('en-IN', {day:'numeric', month:'short'}); } catch(e){}
+            return `<tr class="hist-view">
+                <td>${dateStr}</td><td>${item.name}</td><td>${item.phone||""}</td><td>${item.plan}</td><td>₹${item.amount}</td>
+                <td>
+                    <button class="btn-icon btn-edit" onclick="App.openEdit(${item.rowIndex}, '${item.name}', '${item.phone}', '${item.plan}', '${item.amount}')"><i class="fas fa-pen"></i></button>
+                    <button class="btn-icon btn-delete" onclick="App.deleteRow(${item.rowIndex}, '${item.name}')"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`;
+        }).join("");
     }
-
-    // Render Body
-    tbody.innerHTML = list.map(item => {
-      let dateStr = "N/A";
-      try { dateStr = new Date(item.date).toLocaleDateString('en-IN', {day:'numeric', month:'short'}); } catch(e){}
-
-      if(CURRENT_MODE === 'dashboard') {
-          // --- DASHBOARD VIEW (Clean, WhatsApp) ---
-          let badge = "b-active";
-          let status = `${item.days} Days Left`;
-          if (item.days < 0) { badge = "b-expired"; status = "Expired"; } 
-          else if (item.days <= 7) { badge = "b-soon"; }
-
-          return `
-          <tr class="dash-view">
-            <td>${dateStr}</td>
-            <td>${item.name}</td>
-            <td>${item.phone || ""}</td>
-            <td>${item.plan}</td>
-            <td><span class="badge ${badge}">${status}</span></td>
-            <td>
-              ${item.phone ? `<a href="https://wa.me/91${item.phone}?text=Hello ${item.name}, your membership status: ${status}" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i></a>` : ""}
-            </td>
-          </tr>`;
-      } else {
-          // --- HISTORY VIEW (Raw Data, Delete) ---
-          return `
-          <tr class="hist-view">
-            <td>${dateStr}</td>
-            <td>${item.name}</td>
-            <td>${item.phone || ""}</td>
-            <td>${item.plan}</td>
-            <td>₹${item.amount}</td>
-            <td>
-              <button class="btn-delete" onclick="App.deleteRow(${item.rowIndex}, '${item.name}')">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          </tr>`;
-      }
-    }).join("");
   }
 };
 </script>
