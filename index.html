@@ -457,94 +457,85 @@
     }
 }
 
-    /* --- REVIEWS SLIDER --- */
-.reviews-section {
-    padding: 80px 5%;
+/* --- INFINITE MARQUEE SECTION --- */
+.marquee-section {
+    padding: 60px 0;
     background: #000;
+    overflow: hidden; /* Hides scrollbar */
     position: relative;
-    overflow: hidden; /* Keeps slides contained */
+    border-top: 1px solid #111;
 }
 
-/* THE CARD */
-.review-card {
-    background: #111;
-    border: 1px solid #222;
-    border-radius: 20px;
-    padding: 30px;
-    height: 100%; /* Ensures all cards are same height */
+/* GRADIENT FADE SIDES */
+/* This creates a fade effect on left & right so cards appear smoothly */
+.marquee-container {
     position: relative;
-    transition: 0.3s;
-    user-select: none; /* Prevents text highlighting while dragging */
+    width: 100%;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
-.review-card:hover {
-    border-color: #ff3b3b;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(255, 59, 59, 0.1);
-}
-
-/* QUOTE ICON */
-.quote-icon {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-/* TEXT */
-.review-text {
-    color: #ccc;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 25px;
-    font-style: italic;
-    min-height: 80px; /* Keeps layout consistent */
-}
-
-/* USER PROFILE */
-.user-info {
+/* THE TRACK (Long strip of cards) */
+.marquee-track {
     display: flex;
-    align-items: center;
-    gap: 15px;
-    border-top: 1px solid #222;
-    padding-top: 20px;
+    width: max-content; /* Allows track to be wider than screen */
+    gap: 20px;
+    animation: scroll 30s linear infinite; /* The Magic Animation */
 }
 
-.user-info img {
-    width: 50px; height: 50px;
-    border-radius: 50%;
-    border: 2px solid #333;
+/* PAUSE ON HOVER */
+.marquee-container:hover .marquee-track {
+    animation-play-state: paused;
 }
 
-.user-info h4 {
-    color: white; font-family: 'Oswald', sans-serif;
-    font-size: 1rem; margin: 0;
+/* SMALL CARD DESIGN */
+.review-card-small {
+    background: #0f0f0f;
+    border: 1px solid #222;
+    padding: 20px;
+    border-radius: 12px;
+    width: 300px; /* Fixed width */
+    flex-shrink: 0; /* Prevents squishing */
+    transition: 0.3s;
 }
 
-.user-info span {
-    color: #888; font-size: 0.8rem;
+.review-card-small:hover {
+    border-color: #ff3b3b;
+    background: #151515;
 }
 
-.stars {
-    margin-left: auto; /* Pushes stars to the right */
+.review-card-small .stars {
     font-size: 0.8rem;
+    margin-bottom: 10px;
 }
 
-/* SWIPER DOTS (Pagination) */
-.swiper-pagination-bullet {
-    background: #444;
-    opacity: 1;
-    width: 10px; height: 10px;
-}
-.swiper-pagination-bullet-active {
-    background: #ff3b3b;
-    width: 25px; /* Makes active dot longer */
-    border-radius: 5px;
+.review-card-small p {
+    color: #ccc;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    font-style: italic;
+    margin-bottom: 10px;
 }
 
-/* Add padding to wrapper so shadows don't get cut off */
-.swiper {
-    padding-bottom: 50px !important;
+.review-card-small .user {
+    color: #ff3b3b;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
 }
+
+/* ANIMATION KEYFRAMES */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Move left by exactly 50% (since we duplicated the cards) */
+        transform: translateX(-50%); 
+    }
+}
+        
 /* =========================================
    8. ENGAGING FOOTER (FINAL FIXED)
    ========================================= */
@@ -1138,93 +1129,70 @@ details[open] summary::after {
     <img id="lightbox-img" src="">
 </div>
 
-    <section id="reviews" class="reviews-section">
+   <section class="marquee-section">
     <div class="container">
-        
-        <div class="section-header">
-            <h2 class="section-title" data-aos="fade-up">WALL OF <span style="color:#ff3b3b">LOVE</span></h2>
-            <div class="title-separator"></div>
-            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
-                Stories of sweat, strength, and success.
-            </p>
+        <div class="section-header text-center">
+            <h2 class="section-title" data-aos="fade-up">MEMBERS <span style="color:#ff3b3b">LOVE US</span></h2>
+            <p style="color:#666; font-size:0.9rem;">Rated 4.9/5 stars by 500+ members</p>
         </div>
+    </div>
 
-        <div class="swiper mySwiper" data-aos="fade-up" data-aos-delay="200">
-            <div class="swiper-wrapper">
-
-                <div class="swiper-slide">
-                    <div class="review-card">
-                        <i class="fas fa-quote-left quote-icon"></i>
-                        <p class="review-text">
-                            "The vibe here is different. No judgment, just pure motivation. I lost 8kgs in 2 months with their guidance!"
-                        </p>
-                        <div class="user-info">
-                            <img src="https://ui-avatars.com/api/?name=Rahul+K&background=ff3b3b&color=fff" alt="User">
-                            <div>
-                                <h4>Rahul Kumar</h4>
-                                <span>Weight Loss</span>
-                            </div>
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="review-card">
-                        <i class="fas fa-quote-left quote-icon"></i>
-                        <p class="review-text">
-                            "Best equipment in town. The dumbbells go heavy and the machines are smooth. Perfect for bodybuilding."
-                        </p>
-                        <div class="user-info">
-                            <img src="https://ui-avatars.com/api/?name=Arun+S&background=00bcd4&color=fff" alt="User">
-                            <div>
-                                <h4>Arun Singh</h4>
-                                <span>Bodybuilding</span>
-                            </div>
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="review-card">
-                        <i class="fas fa-quote-left quote-icon"></i>
-                        <p class="review-text">
-                            "Safe for women. The trainers are respectful and the crowd is decent. I love the evening Zumba classes!"
-                        </p>
-                        <div class="user-info">
-                            <img src="https://ui-avatars.com/api/?name=Priya+G&background=9c27b0&color=fff" alt="User">
-                            <div>
-                                <h4>Priya Gowda</h4>
-                                <span>Fitness</span>
-                            </div>
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="review-card">
-                        <i class="fas fa-quote-left quote-icon"></i>
-                        <p class="review-text">
-                            "Affordable pricing for such premium facilities. The AC works great and hygiene is maintained well."
-                        </p>
-                        <div class="user-info">
-                            <img src="https://ui-avatars.com/api/?name=Karthik+R&background=ff9800&color=fff" alt="User">
-                            <div>
-                                <h4>Karthik R</h4>
-                                <span>Student</span>
-                            </div>
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <div class="marquee-container">
+        <div class="marquee-track">
             
-            <div class="swiper-pagination"></div>
-        </div>
+            <div class="review-card-small">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Best gym equipment in the city. The vibe is insane!"</p>
+                <div class="user">- Rahul Kumar</div>
+            </div>
+            <div class="review-card-small">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Lost 5kg in my first month. Trainers are very helpful."</p>
+                <div class="user">- Priya S</div>
+            </div>
+            <div class="review-card-small">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Safe for women and very hygienic washrooms."</p>
+                <div class="user">- Anjali M</div>
+            </div>
+            <div class="review-card-small">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Open on Sundays too! Love the flexibility."</p>
+                <div class="user">- Karthik R</div>
+            </div>
+            <div class="review-card-small">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Affordable pricing for such premium machines."</p>
+                <div class="user">- Vikram Singh</div>
+            </div>
 
+            <div class="review-card-small">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Best gym equipment in the city. The vibe is insane!"</p>
+                <div class="user">- Rahul Kumar</div>
+            </div>
+            <div class="review-card-small">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Lost 5kg in my first month. Trainers are very helpful."</p>
+                <div class="user">- Priya S</div>
+            </div>
+            <div class="review-card-small">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Safe for women and very hygienic washrooms."</p>
+                <div class="user">- Anjali M</div>
+            </div>
+            <div class="review-card-small">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Open on Sundays too! Love the flexibility."</p>
+                <div class="user">- Karthik R</div>
+            </div>
+            <div class="review-card-small">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Affordable pricing for such premium machines."</p>
+                <div class="user">- Vikram Singh</div>
+            </div>
+
+        </div>
     </div>
 </section>
     
