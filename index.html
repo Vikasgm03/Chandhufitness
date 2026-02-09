@@ -1459,8 +1459,8 @@ details[open] summary::after {
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     // --- 1. CONFIGURATION ---
-    // This is the URL from your Admin Panel code. It connects to your Google Sheet.
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwuEJ4dYm3fDSAPGy2JIZSb-p2AeTnqP4HCFtMsQsYKaOT2U42Vc4fYotZTVZU8ruIcQ/exec";
+    // ⚠️ PASTE YOUR NEW GOOGLE SCRIPT URL HERE IF YOU HAVEN'T ALREADY
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynxK5255t3pAmsCHsQegf1L_pS4bTICU9PeJPUvobGxty1Ld1jYO103b6woWGd7yVFpQ/exec";
 
     // --- 2. INITIALIZATION ---
     AOS.init({ duration: 800 });
@@ -1516,6 +1516,7 @@ details[open] summary::after {
     function openAdmission() { document.getElementById('admissionModal').style.display = "block"; document.body.style.overflow = "hidden"; }
     function closeAdmission() { document.getElementById('admissionModal').style.display = "none"; document.body.style.overflow = "auto"; }
 
+    // Close modal when clicking outside
     window.onclick = function(e) {
         if (e.target.classList.contains('modal')) {
             e.target.style.display = "none";
@@ -1523,40 +1524,47 @@ details[open] summary::after {
         }
     }
 
-    // --- 7. FORM SUBMISSION (STOPS EMPTY REQUESTS) ---
+    // --- 7. CUSTOM PLAN LOGIC ---
+    function toggleCustomAmount() {
+        const plan = document.getElementById('plan-select').value;
+        const box = document.getElementById('custom-amount-box');
+        
+        // If user selects "Custom Plan", show the amount box
+        if (plan === 'CUSTOM') {
+            box.style.display = 'block';
+        } else {
+            box.style.display = 'none';
+        }
+    }
+
+    // --- 8. FORM SUBMISSION (THE MAIN ENGINE) ---
     function submitForm(e) {
         e.preventDefault(); // Stop page reload
         
         const form = document.getElementById('gym-form');
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerText;
-
-        // TOGGLE CUSTOM AMOUNT INPUT
-function toggleCustomAmount() {
-    const plan = document.getElementById('plan-select').value;
-    const box = document.getElementById('custom-amount-box');
-    const input = document.getElementById('custom-amount');
-    
-    if (plan === 'CUSTOM') {
-        box.style.display = 'block';
-        input.required = true; // Make it mandatory
-    } else {
-        box.style.display = 'none';
-        input.required = false; // Not needed for standard plans
-        input.value = ""; // Clear it
-    }
-}
         
         // A. GET VALUES
-        // We use .trim() to remove accidental spaces
         const nameInput = form.querySelector('input[name="Name"]');
         const phoneInput = form.querySelector('input[name="Phone"]');
+        let planValue = document.getElementById('plan-select').value;
         
         const name = nameInput.value.trim();
         const phone = phoneInput.value.trim();
-        const plan = form.querySelector('select[name="Plan"]').value;
 
-        // B. STRICT VALIDATION
+        // B. HANDLING CUSTOM AMOUNT
+        if (planValue === "CUSTOM") {
+            const customAmt = document.getElementById('custom-amount').value.trim();
+            if (customAmt === "") {
+                alert("⚠️ Please enter the custom amount!");
+                document.getElementById('custom-amount').focus();
+                return;
+            }
+            planValue = `Custom (₹${customAmt})`; // Formats it like: "Custom (₹500)"
+        }
+
+        // C. STRICT VALIDATION
         if (name === "") {
             alert("⚠️ Name is required!");
             nameInput.focus();
@@ -1568,25 +1576,26 @@ function toggleCustomAmount() {
             return;
         }
 
-        // C. SHOW LOADING STATE
+        // D. SHOW LOADING STATE
         submitBtn.innerText = "Sending...";
         submitBtn.disabled = true;
 
-        // D. PREPARE DATA
+        // E. PREPARE DATA
         const formData = new FormData();
-        formData.append("action", "submit"); // Important for Admin Panel
+        formData.append("action", "submit"); 
         formData.append("Name", name);
         formData.append("Phone", phone);
-        formData.append("Plan", plan);
+        formData.append("Plan", planValue); // Sends either "Gold" or "Custom (₹500)"
         formData.append("Date", new Date().toISOString().split('T')[0]); 
 
-        // E. SEND TO GOOGLE SHEET
+        // F. SEND TO GOOGLE SHEET
         fetch(SCRIPT_URL, { method: 'POST', body: formData })
             .then(response => response.json())
             .then(data => {
                 if (data.result === "success") {
                     alert("✅ Request Sent! We will contact you soon.");
                     form.reset(); 
+                    document.getElementById('custom-amount-box').style.display = 'none'; // Hide custom box
                     closeAdmission();
                 } else {
                     alert("❌ Server Error. Please try again.");
@@ -1595,8 +1604,8 @@ function toggleCustomAmount() {
             .catch(error => {
                 console.error('Error:', error);
                 // Fallback to WhatsApp if server fails
-                const msg = `Hello, I want to join! Name: ${name}, Plan: ${plan}`;
-                window.open(`https://wa.me/919876543210?text=${encodeURIComponent(msg)}`, '_blank');
+                const msg = `Hello, I want to join! Name: ${name}, Plan: ${planValue}`;
+                window.open(`https://wa.me/919535690976?text=${encodeURIComponent(msg)}`, '_blank');
             })
             .finally(() => {
                 submitBtn.innerText = originalText;
@@ -1604,7 +1613,7 @@ function toggleCustomAmount() {
             });
     }
 
-    // --- 8. LIGHTBOX SCRIPT ---
+    // --- 9. LIGHTBOX SCRIPT ---
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
 
