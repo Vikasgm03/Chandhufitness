@@ -304,74 +304,115 @@
         .features li { padding: 12px 0; color: #b3b3b3; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .features li i { color: var(--primary); margin-right: 10px; }
 
-        /* Gallery */
+       /* --- GALLERY SECTION --- */
+.gallery-section {
+    padding: 80px 5%;
+    background: #050505;
+}
 
-<section id="gallery" class="gallery-section">
-    <div class="container">
-        <div class="section-header text-center" style="margin-bottom:50px;">
-            <h2 class="section-title" data-aos="fade-up">THE <span style="color:var(--primary)">IRON PARADISE</span></h2>
-            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
-                Where sweat meets success. Explore our premium facility.
-            </p>
-            <div class="title-bar" data-aos="zoom-in" data-aos-delay="150"></div>
-        </div>
+.section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-        <div class="gallery-grid">
-            
-            <div class="gallery-item feature-item" data-aos="fade-up" onclick="openLightbox(this)">
-                <img src="images/gym_2.png" alt="Main Gym Floor">
-                <div class="overlay">
-                    <div class="icon-box"><i class="fas fa-expand"></i></div>
-                    <h3>MAIN WORKOUT ARENA</h3>
-                    <p>3000 Sq.ft of Raw Power</p>
-                </div>
-            </div>
+/* THE GRID (3 Columns fixed) */
+.gallery-grid {
+    display: grid;
+    /* This ensures exactly 3 columns on desktop, 1 on mobile */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 20px;
+}
 
-            <div class="gallery-item" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox(this)">
-                <img src="images/gym_3.png" alt="Cardio Zone">
-                <div class="overlay">
-                    <div class="icon-box"><i class="fas fa-expand"></i></div>
-                    <h3>CARDIO DECK</h3>
-                    <p>Endurance Training</p>
-                </div>
-            </div>
+/* THE CARD */
+.gallery-card {
+    position: relative;
+    height: 300px; /* Fixed height = perfect alignment */
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #222;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
 
-            <div class="gallery-item" data-aos="fade-up" data-aos-delay="200" onclick="openLightbox(this)">
-                <img src="images/gym_4.png" alt="Dumbbell Rack">
-                <div class="overlay">
-                    <div class="icon-box"><i class="fas fa-expand"></i></div>
-                    <h3>HEAVY WEIGHTS</h3>
-                    <p>Dumbbells up to 50KG</p>
-                </div>
-            </div>
+/* IMAGE */
+.gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Keeps image looking good, never stretched */
+    transition: transform 0.5s ease;
+}
 
-            <div class="gallery-item" data-aos="fade-up" data-aos-delay="300" onclick="openLightbox(this)">
-                <img src="images/gym_5.png" alt="Strength Machines">
-                <div class="overlay">
-                    <div class="icon-box"><i class="fas fa-expand"></i></div>
-                    <h3>ISOLATION MACHINES</h3>
-                    <p>Target Every Muscle</p>
-                </div>
-            </div>
+/* ZOOM ON HOVER */
+.gallery-card:hover img {
+    transform: scale(1.1);
+}
 
-            <div class="gallery-item" data-aos="fade-up" data-aos-delay="400" onclick="openLightbox(this)">
-                <img src="images/gym_6.png" alt="Crossfit">
-                <div class="overlay">
-                    <div class="icon-box"><i class="fas fa-expand"></i></div>
-                    <h3>CROSSFIT ZONE</h3>
-                    <p>Functional Strength</p>
-                </div>
-            </div>
+/* CAPTION (Hidden at bottom) */
+.card-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    padding: 20px;
+    transform: translateY(100%); /* Hidden by default */
+    transition: transform 0.3s ease;
+}
 
-        </div>
-    </div>
-</section>
+/* CAPTION SLIDE UP */
+.gallery-card:hover .card-caption {
+    transform: translateY(0); /* Shows on hover */
+}
 
-<div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="close-btn">&times;</span>
-    <img id="lightbox-img" src="">
-    <div id="caption"></div>
-</div>
+.card-caption h3 {
+    font-family: 'Oswald', sans-serif;
+    color: #ff3b3b;
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+}
+
+.card-caption p {
+    color: white;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* --- LIGHTBOX (Popup) --- */
+.lightbox {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.lightbox img {
+    max-width: 90%; max-height: 80vh;
+    border: 2px solid #333;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+.close-btn {
+    position: absolute; top: 20px; right: 30px;
+    color: white; font-size: 40px; cursor: pointer;
+}
+
+/* MOBILE FIX */
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: 1fr; /* 1 Column on mobile */
+    }
+    .gallery-card {
+        height: 250px;
+    }
+    /* Always show text on mobile (no hover needed) */
+    .card-caption {
+        transform: translateY(0);
+        background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.4));
+    }
+}
 
 /* =========================================
    8. ENGAGING FOOTER (FINAL FIXED)
@@ -890,60 +931,62 @@ details[open] summary::after {
     </div>
 </section>
 
-    <section id="gallery" class="gallery-section">
+   <section id="gallery" class="gallery-section">
     <div class="container">
-        <div class="section-header text-center" style="margin-bottom:50px;">
-            <h2 class="section-title" data-aos="fade-up">THE <span style="color:var(--primary)">IRON PARADISE</span></h2>
-            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
-                Where sweat meets success. Explore our premium facility.
-            </p>
-            <div class="title-bar" data-aos="zoom-in" data-aos-delay="150"></div>
+        
+        <div class="section-header text-center" style="margin-bottom: 50px;">
+            <h2 class="section-title" data-aos="fade-up">INSIDE THE <span style="color:#ff3b3b">ARENA</span></h2>
+            <div style="width: 60px; height: 4px; background: #ff3b3b; margin: 10px auto;"></div>
+            <p style="color:#888; margin-top: 15px;">World-class equipment. High-energy atmosphere.</p>
         </div>
 
         <div class="gallery-grid">
             
-            <div class="gallery-item feature-item" data-aos="fade-up" onclick="openLightbox(this)">
-                <img src="images/gym_2.png" alt="Main Gym Floor">
-                <div class="overlay">
-                    <div class="icon-box"><i class="fas fa-expand"></i></div>
-                    <h3>MAIN WORKOUT ARENA</h3>
-                    <p>3000 Sq.ft of Raw Power</p>
+            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(this)">
+                <img src="images/gym_main.jpg" alt="Main Floor">
+                <div class="card-caption">
+                    <h3>MAIN FLOOR</h3>
+                    <p>3000 Sq.ft Area</p>
                 </div>
             </div>
 
-            <div class="gallery-item" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox(this)">
-                <img src="images/gym_3.png" alt="Cardio Zone">
-                <div class="overlay">
-                    <div class="icon-box"><i class="fas fa-expand"></i></div>
-                    <h3>CARDIO DECK</h3>
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox(this)">
+                <img src="images/gym_cardio.jpg" alt="Cardio">
+                <div class="card-caption">
+                    <h3>CARDIO ZONE</h3>
                     <p>Endurance Training</p>
                 </div>
             </div>
 
-            <div class="gallery-item" data-aos="fade-up" data-aos-delay="200" onclick="openLightbox(this)">
-                <img src="images/gym_4.png" alt="Dumbbell Rack">
-                <div class="overlay">
-                    <div class="icon-box"><i class="fas fa-expand"></i></div>
-                    <h3>HEAVY WEIGHTS</h3>
-                    <p>Dumbbells up to 50KG</p>
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="200" onclick="openLightbox(this)">
+                <img src="images/gym_dumbbells.jpg" alt="Weights">
+                <div class="card-caption">
+                    <h3>FREE WEIGHTS</h3>
+                    <p>Heavy Iron Section</p>
                 </div>
             </div>
 
-            <div class="gallery-item" data-aos="fade-up" data-aos-delay="300" onclick="openLightbox(this)">
-                <img src="images/5.png" alt="Strength Machines">
-                <div class="overlay">
-                    <div class="icon-box"><i class="fas fa-expand"></i></div>
-                    <h3>ISOLATION MACHINES</h3>
-                    <p>Target Every Muscle</p>
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="300" onclick="openLightbox(this)">
+                <img src="images/gym_machines.jpg" alt="Machines">
+                <div class="card-caption">
+                    <h3>PRO MACHINES</h3>
+                    <p>Isolation Training</p>
                 </div>
             </div>
 
-            <div class="gallery-item" data-aos="fade-up" data-aos-delay="400" onclick="openLightbox(this)">
-                <img src="images/gym_6.png" alt="Crossfit">
-                <div class="overlay">
-                    <div class="icon-box"><i class="fas fa-expand"></i></div>
-                    <h3>CROSSFIT ZONE</h3>
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="400" onclick="openLightbox(this)">
+                <img src="images/gym_crossfit.jpg" alt="Crossfit">
+                <div class="card-caption">
+                    <h3>CROSSFIT AREA</h3>
                     <p>Functional Strength</p>
+                </div>
+            </div>
+
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="500" onclick="openLightbox(this)">
+                <img src="images/gym_reception.jpg" alt="Reception">
+                <div class="card-caption">
+                    <h3>RECEPTION</h3>
+                    <p>Supplements & Info</p>
                 </div>
             </div>
 
@@ -951,12 +994,12 @@ details[open] summary::after {
     </div>
 </section>
 
-<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+<div id="lightbox" class="lightbox" onclick="this.style.display='none'">
     <span class="close-btn">&times;</span>
     <img id="lightbox-img" src="">
-    <div id="caption"></div>
 </div>
 
+    
 <section id="faq" style="max-width: 800px; margin: auto;">
     <h2 class="section-title">COMMON <span>QUESTIONS</span></h2>
     
@@ -1222,22 +1265,14 @@ details[open] summary::after {
 </script>
     
 <script>
-    // LIGHTBOX LOGIC
+    // Simple Image Popup Logic
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxCaption = document.getElementById('lightbox-caption');
 
     function openLightbox(element) {
         const img = element.querySelector('img');
-        const title = element.querySelector('h3').innerText;
-        
         lightboxImg.src = img.src;
-        lightboxCaption.innerText = title;
         lightbox.style.display = 'flex';
-    }
-
-    function closeLightbox() {
-        lightbox.style.display = 'none';
     }
 </script>
 </body>
