@@ -456,6 +456,105 @@
     }
 }
 
+        /* --- REVIEWS SECTION --- */
+.reviews-section {
+    padding: 80px 5%;
+    background: #000; /* Distinct black background */
+    border-top: 1px solid #111;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+/* CARD DESIGN */
+.review-card {
+    background: #111;
+    border: 1px solid #222;
+    padding: 25px;
+    border-radius: 16px;
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glow Effect on Hover */
+.review-card:hover {
+    transform: translateY(-5px);
+    border-color: #333;
+    box-shadow: 0 10px 30px rgba(255, 59, 59, 0.1); /* Subtle Red Glow */
+}
+
+/* Top Row: Photo + Stars */
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile { display: flex; align-items: center; gap: 12px; }
+
+.profile-img {
+    width: 45px; height: 45px;
+    background: #ff3b3b; /* Red Circle */
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-family: 'Oswald', sans-serif; font-size: 1.2rem;
+}
+
+.profile-info h4 {
+    color: white; font-size: 0.95rem; margin: 0;
+    font-family: 'Oswald', sans-serif; letter-spacing: 0.5px;
+}
+.profile-info span { font-size: 0.75rem; color: #666; }
+
+/* Stars */
+.stars { color: #ffb700; font-size: 0.9rem; }
+
+/* Review Text */
+.review-text {
+    color: #ccc;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* Badge */
+.verified-badge {
+    font-size: 0.75rem;
+    color: #4caf50; /* Green */
+    display: flex; align-items: center; gap: 5px;
+    font-weight: 600;
+}
+
+/* GOOGLE BUTTON */
+.google-btn-container { text-align: center; margin-top: 40px; }
+
+.btn-google {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 30px;
+    background: transparent;
+    border: 1px solid #333;
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: 0.3s;
+    letter-spacing: 1px;
+}
+
+.btn-google:hover {
+    background: white;
+    color: black;
+    transform: scale(1.05);
+}
+
 /* =========================================
    8. ENGAGING FOOTER (FINAL FIXED)
    ========================================= */
@@ -1049,6 +1148,85 @@ details[open] summary::after {
     <img id="lightbox-img" src="">
 </div>
 
+    <section id="reviews" class="reviews-section">
+    <div class="container">
+        
+        <div class="section-header">
+            <h2 class="section-title" data-aos="fade-up">WHAT OUR <span style="color:#ff3b3b">MEMBERS SAY</span></h2>
+            <div class="title-separator"></div>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Real results. Real stories. Rated 4.9/5 on Google.
+            </p>
+        </div>
+
+        <div class="reviews-grid">
+
+            <div class="review-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-top">
+                    <div class="profile">
+                        <div class="profile-img">R</div> <div class="profile-info">
+                            <h4>Rahul Sharma</h4>
+                            <span>Member since 2023</span>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="review-text">
+                    "Best gym in the area! The equipment is top-notch and the trainers are super helpful. I lost 10kgs in 3 months thanks to the diet plan."
+                </p>
+                <div class="verified-badge"><i class="fas fa-check-circle"></i> Verified Member</div>
+            </div>
+
+            <div class="review-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-top">
+                    <div class="profile">
+                        <div class="profile-img" style="background:#00bcd4">P</div>
+                        <div class="profile-info">
+                            <h4>Priya Gowda</h4>
+                            <span>Cardio & Crossfit</span>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="review-text">
+                    "Safe environment for ladies. Very clean changing rooms and the crowd is decent. Highly recommend for beginners!"
+                </p>
+                <div class="verified-badge"><i class="fas fa-check-circle"></i> Verified Member</div>
+            </div>
+
+            <div class="review-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="card-top">
+                    <div class="profile">
+                        <div class="profile-img" style="background:#ff9800">A</div>
+                        <div class="profile-info">
+                            <h4>Arun Kumar</h4>
+                            <span>Bodybuilding</span>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                <p class="review-text">
+                    "Great vibe. The dumbbells go up to 50kg which is rare. Music system is insane. Only suggestion is to add one more bench press."
+                </p>
+                <div class="verified-badge"><i class="fas fa-check-circle"></i> Verified Member</div>
+            </div>
+
+        </div>
+
+        <div class="google-btn-container" data-aos="zoom-in" data-aos-delay="400">
+            <a href="https://g.page/YOUR_GOOGLE_LINK" target="_blank" class="btn-google">
+                <i class="fab fa-google"></i> SEE ALL REVIEWS ON GOOGLE
+            </a>
+        </div>
+
+    </div>
+</section>
     
 <section id="faq" style="max-width: 800px; margin: auto;">
     <h2 class="section-title">COMMON <span>QUESTIONS</span></h2>
