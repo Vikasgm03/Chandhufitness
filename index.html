@@ -475,60 +475,63 @@
     }
 }
 
-/* --- INFINITE MARQUEE SECTION --- */
+/* --- INFINITE MARQUEE SECTION (FIXED) --- */
 .marquee-section {
     padding: 60px 0;
     background: #000;
-    overflow: hidden; /* Hides scrollbar */
+    overflow: hidden; /* Hides the scrollbar */
     position: relative;
     border-top: 1px solid #111;
 }
 
-/* GRADIENT FADE SIDES */
-/* This creates a fade effect on left & right so cards appear smoothly */
+/* CONTAINER: Handles the Fade Effect & Spacing */
 .marquee-container {
     position: relative;
     width: 100%;
-
-    margin-top: 50px; 
+    overflow: hidden; /* crucial fix */
     
+    /* FIX: Pushes the cards down from the red header line */
+    margin-top: 50px; 
+
+    /* Fade Effect on sides */
     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
-}
 
-/* THE TRACK (Long strip of cards) */
+/* THE TRACK: The moving strip */
 .marquee-track {
     display: flex;
-    width: max-content; /* Allows track to be wider than screen */
+    width: max-content; /* Ensures it stretches to fit all cards */
     gap: 20px;
-    animation: scroll 30s linear infinite; /* The Magic Animation */
+    animation: scroll 35s linear infinite; /* Smooth speed */
 }
 
-/* PAUSE ON HOVER */
+/* PAUSE ANIMATION ON HOVER */
 .marquee-container:hover .marquee-track {
     animation-play-state: paused;
 }
 
-/* SMALL CARD DESIGN */
+/* CARD DESIGN */
 .review-card-small {
     background: #0f0f0f;
     border: 1px solid #222;
     padding: 20px;
     border-radius: 12px;
-    width: 300px; /* Fixed width */
-    flex-shrink: 0; /* Prevents squishing */
+    width: 320px; /* Fixed width prevents squashing */
+    flex-shrink: 0; /* CRITICAL: Prevents cards from shrinking */
     transition: 0.3s;
 }
 
 .review-card-small:hover {
     border-color: #ff3b3b;
     background: #151515;
+    transform: translateY(-2px);
 }
 
 .review-card-small .stars {
     font-size: 0.8rem;
     margin-bottom: 10px;
+    color: #ffb700;
 }
 
 .review-card-small p {
@@ -536,26 +539,22 @@
     font-size: 0.9rem;
     line-height: 1.5;
     font-style: italic;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .review-card-small .user {
     color: #ff3b3b;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 700;
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-/* ANIMATION KEYFRAMES */
+/* ANIMATION LOGIC */
 @keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        /* Move left by exactly 50% (since we duplicated the cards) */
-        transform: translateX(-50%); 
-    }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Moves exactly half way */
 }
         
 /* =========================================
