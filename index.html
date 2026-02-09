@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Chandu-Fitness | Elite Training Facility</title>
-    
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -456,105 +457,94 @@
     }
 }
 
-        /* --- REVIEWS SECTION --- */
+    /* --- REVIEWS SLIDER --- */
 .reviews-section {
     padding: 80px 5%;
-    background: #000; /* Distinct black background */
-    border-top: 1px solid #111;
+    background: #000;
+    position: relative;
+    overflow: hidden; /* Keeps slides contained */
 }
 
-.reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
-}
-
-/* CARD DESIGN */
+/* THE CARD */
 .review-card {
     background: #111;
     border: 1px solid #222;
-    padding: 25px;
-    border-radius: 16px;
-    transition: 0.3s;
+    border-radius: 20px;
+    padding: 30px;
+    height: 100%; /* Ensures all cards are same height */
     position: relative;
-    overflow: hidden;
+    transition: 0.3s;
+    user-select: none; /* Prevents text highlighting while dragging */
 }
 
-/* Glow Effect on Hover */
 .review-card:hover {
+    border-color: #ff3b3b;
     transform: translateY(-5px);
-    border-color: #333;
-    box-shadow: 0 10px 30px rgba(255, 59, 59, 0.1); /* Subtle Red Glow */
+    box-shadow: 0 10px 30px rgba(255, 59, 59, 0.1);
 }
 
-/* Top Row: Photo + Stars */
-.card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+/* QUOTE ICON */
+.quote-icon {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
 }
 
-.profile { display: flex; align-items: center; gap: 12px; }
-
-.profile-img {
-    width: 45px; height: 45px;
-    background: #ff3b3b; /* Red Circle */
-    color: white;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: bold; font-family: 'Oswald', sans-serif; font-size: 1.2rem;
-}
-
-.profile-info h4 {
-    color: white; font-size: 0.95rem; margin: 0;
-    font-family: 'Oswald', sans-serif; letter-spacing: 0.5px;
-}
-.profile-info span { font-size: 0.75rem; color: #666; }
-
-/* Stars */
-.stars { color: #ffb700; font-size: 0.9rem; }
-
-/* Review Text */
+/* TEXT */
 .review-text {
     color: #ccc;
-    font-size: 0.95rem;
+    font-size: 1rem;
     line-height: 1.6;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-style: italic;
+    min-height: 80px; /* Keeps layout consistent */
 }
 
-/* Badge */
-.verified-badge {
-    font-size: 0.75rem;
-    color: #4caf50; /* Green */
-    display: flex; align-items: center; gap: 5px;
-    font-weight: 600;
+/* USER PROFILE */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #222;
+    padding-top: 20px;
 }
 
-/* GOOGLE BUTTON */
-.google-btn-container { text-align: center; margin-top: 40px; }
-
-.btn-google {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 12px 30px;
-    background: transparent;
-    border: 1px solid #333;
-    color: white;
-    font-family: 'Oswald', sans-serif;
-    text-decoration: none;
-    border-radius: 30px;
-    transition: 0.3s;
-    letter-spacing: 1px;
+.user-info img {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    border: 2px solid #333;
 }
 
-.btn-google:hover {
-    background: white;
-    color: black;
-    transform: scale(1.05);
+.user-info h4 {
+    color: white; font-family: 'Oswald', sans-serif;
+    font-size: 1rem; margin: 0;
 }
 
+.user-info span {
+    color: #888; font-size: 0.8rem;
+}
+
+.stars {
+    margin-left: auto; /* Pushes stars to the right */
+    font-size: 0.8rem;
+}
+
+/* SWIPER DOTS (Pagination) */
+.swiper-pagination-bullet {
+    background: #444;
+    opacity: 1;
+    width: 10px; height: 10px;
+}
+.swiper-pagination-bullet-active {
+    background: #ff3b3b;
+    width: 25px; /* Makes active dot longer */
+    border-radius: 5px;
+}
+
+/* Add padding to wrapper so shadows don't get cut off */
+.swiper {
+    padding-bottom: 50px !important;
+}
 /* =========================================
    8. ENGAGING FOOTER (FINAL FIXED)
    ========================================= */
@@ -1152,77 +1142,87 @@ details[open] summary::after {
     <div class="container">
         
         <div class="section-header">
-            <h2 class="section-title" data-aos="fade-up">WHAT OUR <span style="color:#ff3b3b">MEMBERS SAY</span></h2>
+            <h2 class="section-title" data-aos="fade-up">WALL OF <span style="color:#ff3b3b">LOVE</span></h2>
             <div class="title-separator"></div>
             <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
-                Real results. Real stories. Rated 4.9/5 on Google.
+                Stories of sweat, strength, and success.
             </p>
         </div>
 
-        <div class="reviews-grid">
+        <div class="swiper mySwiper" data-aos="fade-up" data-aos-delay="200">
+            <div class="swiper-wrapper">
 
-            <div class="review-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="card-top">
-                    <div class="profile">
-                        <div class="profile-img">R</div> <div class="profile-info">
-                            <h4>Rahul Sharma</h4>
-                            <span>Member since 2023</span>
+                <div class="swiper-slide">
+                    <div class="review-card">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p class="review-text">
+                            "The vibe here is different. No judgment, just pure motivation. I lost 8kgs in 2 months with their guidance!"
+                        </p>
+                        <div class="user-info">
+                            <img src="https://ui-avatars.com/api/?name=Rahul+K&background=ff3b3b&color=fff" alt="User">
+                            <div>
+                                <h4>Rahul Kumar</h4>
+                                <span>Weight Loss</span>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
                         </div>
                     </div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
                 </div>
-                <p class="review-text">
-                    "Best gym in the area! The equipment is top-notch and the trainers are super helpful. I lost 10kgs in 3 months thanks to the diet plan."
-                </p>
-                <div class="verified-badge"><i class="fas fa-check-circle"></i> Verified Member</div>
-            </div>
 
-            <div class="review-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="card-top">
-                    <div class="profile">
-                        <div class="profile-img" style="background:#00bcd4">P</div>
-                        <div class="profile-info">
-                            <h4>Priya Gowda</h4>
-                            <span>Cardio & Crossfit</span>
+                <div class="swiper-slide">
+                    <div class="review-card">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p class="review-text">
+                            "Best equipment in town. The dumbbells go heavy and the machines are smooth. Perfect for bodybuilding."
+                        </p>
+                        <div class="user-info">
+                            <img src="https://ui-avatars.com/api/?name=Arun+S&background=00bcd4&color=fff" alt="User">
+                            <div>
+                                <h4>Arun Singh</h4>
+                                <span>Bodybuilding</span>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
                         </div>
                     </div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
                 </div>
-                <p class="review-text">
-                    "Safe environment for ladies. Very clean changing rooms and the crowd is decent. Highly recommend for beginners!"
-                </p>
-                <div class="verified-badge"><i class="fas fa-check-circle"></i> Verified Member</div>
-            </div>
 
-            <div class="review-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="card-top">
-                    <div class="profile">
-                        <div class="profile-img" style="background:#ff9800">A</div>
-                        <div class="profile-info">
-                            <h4>Arun Kumar</h4>
-                            <span>Bodybuilding</span>
+                <div class="swiper-slide">
+                    <div class="review-card">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p class="review-text">
+                            "Safe for women. The trainers are respectful and the crowd is decent. I love the evening Zumba classes!"
+                        </p>
+                        <div class="user-info">
+                            <img src="https://ui-avatars.com/api/?name=Priya+G&background=9c27b0&color=fff" alt="User">
+                            <div>
+                                <h4>Priya Gowda</h4>
+                                <span>Fitness</span>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
                         </div>
                     </div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="review-card">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p class="review-text">
+                            "Affordable pricing for such premium facilities. The AC works great and hygiene is maintained well."
+                        </p>
+                        <div class="user-info">
+                            <img src="https://ui-avatars.com/api/?name=Karthik+R&background=ff9800&color=fff" alt="User">
+                            <div>
+                                <h4>Karthik R</h4>
+                                <span>Student</span>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                        </div>
                     </div>
                 </div>
-                <p class="review-text">
-                    "Great vibe. The dumbbells go up to 50kg which is rare. Music system is insane. Only suggestion is to add one more bench press."
-                </p>
-                <div class="verified-badge"><i class="fas fa-check-circle"></i> Verified Member</div>
+
             </div>
-
-        </div>
-
-        <div class="google-btn-container" data-aos="zoom-in" data-aos-delay="400">
-            <a href="https://g.page/YOUR_GOOGLE_LINK" target="_blank" class="btn-google">
-                <i class="fab fa-google"></i> SEE ALL REVIEWS ON GOOGLE
-            </a>
+            
+            <div class="swiper-pagination"></div>
         </div>
 
     </div>
