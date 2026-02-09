@@ -1456,176 +1456,151 @@ details[open] summary::after {
     </div>
 </div>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    // --- 1. CONFIGURATION ---
-    // ⚠️ PASTE YOUR NEW GOOGLE SCRIPT URL HERE IF YOU HAVEN'T ALREADY
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwNGxdDIqJdUZFwya2fwijTm4m-ASk1XJvBQd93BsM2jBMWADhs81x2TpHdPJndoHualw/exec";
 
-    // --- 2. INITIALIZATION ---
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+
     AOS.init({ duration: 800 });
 
+
+
     window.addEventListener('scroll', () => {
+
         document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
+
     });
 
-    // --- 3. TYPEWRITER EFFECT ---
+
+
     const words = ["LEGACY", "STRENGTH", "DISCIPLINE"];
+
     let i = 0, j = 0, isDeleting = false;
+
     function type() {
+
         let current = words[i];
+
         document.querySelector(".typewriter").innerText = isDeleting ? current.substring(0, j--) : current.substring(0, j++);
+
         if (!isDeleting && j > current.length) { isDeleting = true; setTimeout(type, 1500); }
+
         else if (isDeleting && j < 0) { isDeleting = false; i = (i+1)%words.length; j=0; setTimeout(type, 500); }
+
         else setTimeout(type, 50);
+
     }
+
     type();
 
-    // --- 4. NAVIGATION & TABS ---
+
+
     function toggleMenu() { document.getElementById("nav-list").classList.toggle("active"); }
 
+
+
     function switchLevel(levelName) {
+
         document.querySelectorAll('.level-btn').forEach(btn => {
+
             btn.classList.remove('active');
+
             if(btn.dataset.level === levelName) btn.classList.add('active');
+
         });
+
         document.querySelectorAll('.schedule-grid').forEach(grid => grid.classList.remove('active'));
+
         document.getElementById(levelName).classList.add('active');
+
     }
 
-    // --- 5. CALCULATORS ---
+
+
     function calcBMI() {
+
         const w = document.getElementById('bmi-weight').value, h = document.getElementById('bmi-height').value;
+
         if(w && h) document.getElementById('bmi-result').innerText = `BMI: ${(w/((h/100)**2)).toFixed(1)}`;
+
     }
+
+
 
     function calcCalories() {
+
         const w = document.getElementById('cal-weight').value, h = document.getElementById('cal-height').value, a = document.getElementById('cal-age').value;
+
         if(w && h && a) document.getElementById('cal-result').innerText = `Needs: ${Math.round(10*w + 6.25*h - 5*a + 5)} kcal`;
+
     }
 
-    // --- 6. MODAL LOGIC ---
+
+
     function openModal(plan, price) {
+
         document.getElementById('paymentModal').style.display = "block";
+
         document.getElementById('modalPlan').innerText = plan;
+
         document.getElementById('modalPrice').innerText = price;
+
         document.body.style.overflow = "hidden";
+
     }
+
     function closeModal() { document.getElementById('paymentModal').style.display = "none"; document.body.style.overflow = "auto"; }
-    
+
     function openAdmission() { document.getElementById('admissionModal').style.display = "block"; document.body.style.overflow = "hidden"; }
+
     function closeAdmission() { document.getElementById('admissionModal').style.display = "none"; document.body.style.overflow = "auto"; }
 
-    // Close modal when clicking outside
+
+
     window.onclick = function(e) {
+
         if (e.target.classList.contains('modal')) {
+
             e.target.style.display = "none";
+
             document.body.style.overflow = "auto";
+
         }
+
     }
 
-    // --- 7. CUSTOM PLAN LOGIC ---
-    function toggleCustomAmount() {
-        const plan = document.getElementById('plan-select').value;
-        const box = document.getElementById('custom-amount-box');
-        
-        // If user selects "Custom Plan", show the amount box
-        if (plan === 'CUSTOM') {
-            box.style.display = 'block';
-        } else {
-            box.style.display = 'none';
-        }
-    }
+</script>
 
-    // --- 8. FORM SUBMISSION (THE MAIN ENGINE) ---
-    function submitForm(e) {
-        e.preventDefault(); // Stop page reload
-        
-        const form = document.getElementById('gym-form');
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerText;
-        
-        // A. GET VALUES
-        const nameInput = form.querySelector('input[name="Name"]');
-        const phoneInput = form.querySelector('input[name="Phone"]');
-        let planValue = document.getElementById('plan-select').value;
-        
-        const name = nameInput.value.trim();
-        const phone = phoneInput.value.trim();
+    
 
-        // B. HANDLING CUSTOM AMOUNT
-        if (planValue === "CUSTOM") {
-            const customAmt = document.getElementById('custom-amount').value.trim();
-            if (customAmt === "") {
-                alert("⚠️ Please enter the custom amount!");
-                document.getElementById('custom-amount').focus();
-                return;
-            }
-            planValue = `Custom (₹${customAmt})`; // Formats it like: "Custom (₹500)"
-        }
+<script>
 
-        // C. STRICT VALIDATION
-        if (name === "") {
-            alert("⚠️ Name is required!");
-            nameInput.focus();
-            return;
-        }
-        if (phone === "" || phone.length < 10) {
-            alert("⚠️ Please enter a valid 10-digit phone number!");
-            phoneInput.focus();
-            return;
-        }
+    // LIGHTBOX SCRIPT
 
-        // D. SHOW LOADING STATE
-        submitBtn.innerText = "Sending...";
-        submitBtn.disabled = true;
-
-        // E. PREPARE DATA
-        const formData = new FormData();
-        formData.append("action", "submit"); 
-        formData.append("Name", name);
-        formData.append("Phone", phone);
-        formData.append("Plan", planValue); // Sends either "Gold" or "Custom (₹500)"
-        formData.append("Date", new Date().toISOString().split('T')[0]); 
-
-        // F. SEND TO GOOGLE SHEET
-        fetch(SCRIPT_URL, { method: 'POST', body: formData })
-            .then(response => response.json())
-            .then(data => {
-                if (data.result === "success") {
-                    alert("✅ Request Sent! We will contact you soon.");
-                    form.reset(); 
-                    document.getElementById('custom-amount-box').style.display = 'none'; // Hide custom box
-                    closeAdmission();
-                } else {
-                    alert("❌ Server Error. Please try again.");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Fallback to WhatsApp if server fails
-                const msg = `Hello, I want to join! Name: ${name}, Plan: ${planValue}`;
-                window.open(`https://wa.me/919535690976?text=${encodeURIComponent(msg)}`, '_blank');
-            })
-            .finally(() => {
-                submitBtn.innerText = originalText;
-                submitBtn.disabled = false;
-            });
-    }
-
-    // --- 9. LIGHTBOX SCRIPT ---
     const lightbox = document.getElementById('lightbox');
+
     const lightboxImg = document.getElementById('lightbox-img');
 
+
+
     function openLightbox(element) {
+
         const img = element.querySelector('img');
+
         lightboxImg.src = img.src;
+
         lightbox.style.display = 'flex';
+
     }
 
+
+
     function closeLightbox() {
+
         lightbox.style.display = 'none';
+
     }
+
 </script>
 </body>
 </html>
