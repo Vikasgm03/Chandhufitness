@@ -145,26 +145,100 @@
             transform: translateY(-2px);
         }
 
-        /* --- 3. HERO SECTION --- */
-        .hero {
-            height: 100vh;
-            width: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.9)), url('images/gym_banner.jpeg');
-            background-size: cover; background-position: center; background-attachment: fixed;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 0 20px;
-            overflow: hidden;
-        }
+/* --- 3. PREMIUM HERO SECTION (Updated) --- */
+.hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    /* ⚠️ Make sure this image path is correct */
+    background: url('../images/gym_banner.jpeg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
 
-        .hero h1 { font-size: 5rem; line-height: 1.1; margin-bottom: 20px; text-shadow: 0 5px 15px rgba(0,0,0,0.8); }
-        .typewriter { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
-        
-        .cta-btn {
-            padding: 15px 50px; background: var(--primary); border: none;
-            color: white; font-size: 1.2rem; font-weight: bold; cursor: pointer;
-            transition: 0.3s; margin-top: 30px; clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-        }
-        .cta-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px var(--primary-glow); }
+/* Dark Gradient Overlay (Crucial for Premium Look) */
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.8) 100%);
+    z-index: 1; /* Sits above image, below text */
+}
+
+/* Content Positioning */
+.hero-content {
+    position: relative;
+    z-index: 3; /* Sits above the floating icons */
+    max-width: 800px;
+    padding: 20px;
+}
+
+/* Premium Typography */
+.hero h1 {
+    font-size: 5rem;
+    line-height: 1.1;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+}
+
+/* The Gold Text Animation */
+.text-gold {
+    color: transparent;
+    -webkit-text-stroke: 1px #FFD700;
+    background: linear-gradient(to right, #FFD700, #FFF, #FFD700);
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 200%;
+    animation: shine 3s infinite linear;
+}
+
+/* Badge Style */
+.badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #FFD700;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    border-radius: 50px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+}
+
+/* Subtitle */
+.hero p {
+    font-size: 1.2rem;
+    color: #ccc;
+    font-weight: 300;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+/* Button Group */
+.btn-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Animations */
+@keyframes shine {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 3rem; }
+    .btn-group { flex-direction: column; width: 100%; }
+    .cta-btn { width: 100%; }
+}
 
         /* --- 4. GLASSMORPHISM CARDS --- */
         section { 
