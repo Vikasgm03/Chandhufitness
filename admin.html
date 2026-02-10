@@ -323,25 +323,25 @@ const Auth = {
     }
 };
 
-const App = {
-  fetchData() {
+fetchData() {
     document.getElementById("loader").style.display = "block";
     document.getElementById("data-table").style.display = "none";
     document.getElementById("approvals-container").style.display = "none";
     
-    // 1. Fetch Main Data
+    // 1. Fetch Main Data (Active Members)
     fetch(CONFIG.API_URL)
       .then(r => r.json())
       .then(data => {
-        // --- Process Main Data ---
         const rows = data.data.slice(1);
         RAW_DATA = rows
             .map((r, i) => ({
                 date: r[0], name: r[1], phone: r[2] ? String(r[2]) : "", 
                 plan: r[3], amount: parseInt(r[4]) || 0, days: parseInt(r[7]) || 0, rowIndex: i + 2 
             }))
-            .filter(item => item.name && item.date);
+            // FILTER: Remove empty rows from Main Dashboard
+            .filter(item => item.name && item.phone && item.name.trim() !== "");
         
+        // SORT: Latest Date First
         RAW_DATA.sort((a,b) => new Date(b.date) - new Date(a.date));
 
         const uniqueMap = new Map();
@@ -353,21 +353,37 @@ const App = {
 
         this.updateStats();
         
-        // 2. Fetch Pending Approvals (Nested)
+        // 2. Fetch Pending Approvals
         fetch(CONFIG.API_URL + "?action=getPending")
             .then(res => res.json())
             .then(pending => {
-                PENDING_DATA = pending;
+                
+                // --- FIX STARTS HERE ---
+                
+                // A. Filter out empty rows (Must have Name AND Phone)
+                PENDING_DATA = pending.filter(user => 
+                    user.Name && user.Phone && String(user.Name).trim() !== ""
+                );
+
+                // B. Sort by Date (Newest First)
+                PENDING_DATA.sort((a, b) => {
+                    // Assuming 'uid' is a timestamp, it's safer to sort by UID descending
+                    // Or use Date if available: new Date(b.Date) - new Date(a.Date)
+                    return (b.uid || 0) - (a.uid || 0); 
+                });
+
+                // --- FIX ENDS HERE ---
+
                 const badge = document.getElementById('badge-pending');
-                if(pending.length > 0) {
+                if(PENDING_DATA.length > 0) {
                     badge.style.display = 'inline-block';
-                    badge.innerText = pending.length;
+                    badge.innerText = PENDING_DATA.length;
                 } else {
                     badge.style.display = 'none';
                 }
                 
                 document.getElementById("loader").style.display = "none";
-                this.render(); // Render based on current mode
+                this.render(); 
             });
       });
   },
