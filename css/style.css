@@ -84,63 +84,170 @@
     50% { transform: translateY(-20px); }
 }
 
-/* 3. HERO CONTENT */
+/* =========================================
+   3. HERO SECTION (FIXED ALIGNMENT)
+   ========================================= */
+.glass-hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background: url('../images/gym_banner.jpeg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    
+    /* FLEXBOX CENTERING MAGIC */
+    display: flex;
+    flex-direction: column; /* Stacks items vertically */
+    justify-content: center; /* Centers vertically */
+    align-items: center;     /* Centers horizontally */
+    text-align: center;      /* Forces text to center */
+    
+    overflow: hidden;
+    padding-top: 80px; /* CRITICAL: Pushes content down so it doesn't hit the Logo */
+}
+
+/* Background Overlay */
+.glass-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+    z-index: 1;
+}
+
+/* Content Wrapper - Forces everything to the middle */
 .hero-content {
     position: relative;
     z-index: 10;
-    max-width: 800px;
+    max-width: 900px;
+    width: 100%;
     padding: 0 20px;
+    
+    /* DOUBLE CHECK CENTERING */
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
 }
 
-/* Pill Badge (Small Top Label) */
-.pill-badge {
-    display: inline-flex;
+/* Floating Bubbles - Moved further out to avoid text collision */
+.floating-container {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.glass-bubble {
+    position: absolute;
+    display: flex;
     align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 8px 20px;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #eee;
-    margin-bottom: 25px;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    color: rgba(255, 255, 255, 0.8);
+    animation: floatSmooth 6s ease-in-out infinite;
+}
+
+/* FIX: Moved icons closer to edges so they don't block text */
+.b1 { 
+    width: 100px; height: 100px; 
+    top: 25%; left: 5%; /* Moved to edge */
+    font-size: 2.5rem; 
+    animation-delay: 0s; 
+}
+
+.b2 { 
+    width: 70px; height: 70px; 
+    top: 30%; right: 5%; /* Moved to edge */
+    font-size: 1.8rem; 
+    animation-delay: 2s; 
+    color: #ff4d4d; 
+}
+
+.b3 { 
+    width: 90px; height: 90px; 
+    bottom: 15%; left: 10%; 
+    font-size: 2.2rem; 
+    animation-delay: 1s; 
+}
+
+@keyframes floatSmooth {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Text Styling */
+.pill-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 25px; border-radius: 50px;
+    font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
+    color: #fff; margin-bottom: 30px; 
+    backdrop-filter: blur(10px);
 }
 
 .dot {
-    width: 8px; height: 8px;
-    background: #4ade80; /* Green "Live" dot */
-    border-radius: 50%;
-    box-shadow: 0 0 10px #4ade80;
+    width: 8px; height: 8px; background: #4ade80;
+    border-radius: 50%; box-shadow: 0 0 10px #4ade80;
 }
 
-/* Main Heading */
 .glass-hero h1 {
-    /* Clamp automatically resizes text: Min 2.5rem, Ideal 5vw, Max 5rem */
-    font-size: clamp(2.5rem, 6vw, 5.5rem); 
-    font-weight: 800;
-    line-height: 1.1;
+    font-size: clamp(3rem, 6vw, 6rem); /* Big responsive text */
+    font-weight: 800; 
+    line-height: 1.1; 
     color: white;
-    margin-bottom: 20px;
-    letter-spacing: -1px;
+    margin-bottom: 20px; 
+    text-transform: uppercase;
+    width: 100%; /* Ensures text aligns relative to full width */
 }
 
 .highlight-text {
-    /* Gradient Text */
-    background: linear-gradient(to right, #fff, #999);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    background: linear-gradient(to right, #fff, #aaa);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 
 .glass-hero p {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    color: #ccc;
-    margin-bottom: 40px;
-    font-weight: 300;
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    color: #ddd; 
+    margin-bottom: 40px; 
+    font-weight: 400; 
     line-height: 1.6;
+    max-width: 600px; /* Prevents paragraph from getting too wide */
+}
+
+/* Buttons */
+.btn-wrapper { 
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    align-items: center;
+    flex-wrap: wrap; /* Allows stacking on tiny screens */
+}
+
+.modern-btn {
+    padding: 18px 45px; background: white; color: black;
+    border: none; border-radius: 50px; font-weight: 700; font-size: 1rem;
+    cursor: pointer; transition: 0.3s; box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+.modern-btn:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); }
+
+.link-btn {
+    background: transparent; color: white; border: none; font-size: 1rem;
+    cursor: pointer; border-bottom: 1px solid transparent; transition: 0.3s;
+    display: flex; align-items: center; gap: 10px; padding: 10px;
+}
+.link-btn:hover { gap: 15px; border-bottom: 1px solid white; }
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .glass-hero { padding-top: 100px; } /* More space on mobile */
+    .b1 { top: 15%; left: 2%; opacity: 0.3; } /* Faint icons on mobile */
+    .b2 { top: 20%; right: 2%; opacity: 0.3; }
+    .b3 { bottom: 10%; left: 5%; opacity: 0.3; }
+    .glass-hero h1 { font-size: 3rem; }
 }
 
 /* 4. BUTTONS */
