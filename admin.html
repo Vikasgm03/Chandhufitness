@@ -246,14 +246,20 @@
     </div>
   </div>
 
-  <div id="add-modal" class="modal-overlay">
+ <div id="add-modal" class="modal-overlay">
     <div class="edit-box">
         <div class="edit-title">ADD MEMBER</div>
         
         <div class="input-group">
+            <label class="input-label">JOIN DATE</label>
+            <input type="date" id="new-date" class="edit-field">
+        </div>
+
+        <div class="input-group">
             <label class="input-label">FULL NAME</label>
             <input type="text" id="new-name" class="edit-field">
         </div>
+      
         <div class="input-group">
             <label class="input-label">PHONE NUMBER</label>
             <input type="number" id="new-phone" class="edit-field">
@@ -478,21 +484,29 @@ const App = {
     });
   },
 
-  // --- MANUAL ADD ACTIONS ---
-  openAddModal() {
+ openAddModal() {
+    // Set today's date automatically
+    document.getElementById('new-date').valueAsDate = new Date();
+    
     document.getElementById('new-name').value = '';
     document.getElementById('new-phone').value = '';
     document.getElementById('new-amount').value = '';
     document.getElementById('add-modal').style.display = 'flex';
   },
 
-  saveNewMember() {
+saveNewMember() {
+    // 1. Get the Date
+    const date = document.getElementById('new-date').value;
     const name = document.getElementById('new-name').value;
     const phone = document.getElementById('new-phone').value;
     const plan = document.getElementById('new-plan').value;
     const amount = document.getElementById('new-amount').value;
 
-    if(!name || !phone || !amount) { alert("Please fill all fields"); return; }
+    // 2. Validate Date is selected
+    if(!date || !name || !phone || !amount) { 
+        alert("Please fill all fields, including Date."); 
+        return; 
+    }
 
     const btn = document.querySelector('#add-modal .btn-save');
     const oldText = btn.innerText;
@@ -500,6 +514,7 @@ const App = {
 
     const formData = new URLSearchParams();
     formData.append('action', 'create_admin'); 
+    formData.append('Date', date); // <--- Sending Date to Backend
     formData.append('Name', name);
     formData.append('Phone', phone);
     formData.append('Plan', plan);
